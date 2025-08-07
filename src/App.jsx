@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Try from './Try.jsx';
+import Login from './Login.jsx';
 
 function App() {
   return(
     <div>
-      <Try />
+      <Login />
     </div>
   )
 }
