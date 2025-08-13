@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginCompt from "./LoginCompt";
 import myLogo from "./assets/logo.svg";
+import { signInWithGoogle, signInWithEmail } from "./firebase";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,19 +12,24 @@ export default function Login() {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const handleLogin = () => {
-    // login validation
-    if (!email || !password) {
-      alert("Please enter email and password");
-      return;
+   const handleLogin = async () => {
+    try {
+      const userData = await signInWithEmail(email, password);
+      console.log("Email/Password User:", userData);
+      navigate("/dashboard", {state: {user: userData}});
+    } catch (error) {
+      alert("Login failed. Please check your email or password.");
     }
-
-    // successful login
-    navigate("/dashboard");
   };
 
-  const handleGoogleLogin = () => {
-    //Google auth
+   const handleGoogleLogin = async () => {
+    try {
+      const userData = await signInWithGoogle();
+      console.log("Google User:", userData);
+      navigate("/dashboard", { state: {user: userData} });
+    } catch (error) {
+      alert("Google login failed. Please try again.");
+    }
   };
 
   return (
