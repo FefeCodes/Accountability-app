@@ -5,18 +5,24 @@ import { useNavigate } from "react-router-dom";
 import { signInWithGoogle, signUpWithEmail } from "./firebase";
 
 export default function Signup() {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  })
+
   const navigate = useNavigate();
 
-  const handleFullNameChange = (e) => setFullName(e.target.value);
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
-  const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  }
 
   const handleSignup = async () => {
+    const { fullName, email, password, confirmPassword } = formData;
+
     if (!fullName || !email || !password || !confirmPassword) {
       alert("Please fill in all fields");
       return;
@@ -55,14 +61,8 @@ export default function Signup() {
       />
 
       <SignupCompt
-        fullName={fullName}
-        email={email}
-        password={password}
-        confirmPassword={confirmPassword}
-        onFullNameChange={handleFullNameChange}
-        onEmailChange={handleEmailChange}
-        onPasswordChange={handlePasswordChange}
-        onConfirmPasswordChange={handleConfirmPasswordChange}
+        formData={formData}
+        onChange={handleChange}
         onSubmit={handleSignup}
         onGoogleSignup={handleGoogleSignup}
       />

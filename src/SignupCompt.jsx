@@ -1,15 +1,10 @@
 import googleIcon from "./assets/google-icon.svg";
 import { Link } from "react-router-dom";
+import InputField from "./InputField.jsx";
 
 export default function SignupCompt({
-  fullName,
-  email,
-  password,
-  confirmPassword,
-  onFullNameChange,
-  onEmailChange,
-  onPasswordChange,
-  onConfirmPasswordChange,
+  formData,
+  onChange,
   onSubmit,
   onGoogleSignup,
 }) {
@@ -17,53 +12,41 @@ export default function SignupCompt({
     <div className=" w-1/2 h-screen bg-white p-16  flex flex-col justify-center items-start">
       <h1 className="text-2xl font-bold pb-4 text-black">Welcome</h1>
 
-      <div className="w-full h-auto flex flex-col justify-start items-start gap-y-2">
-        <label className="text-l font-medium  text-black">Full Name</label>
-        <input
-          className="w-full h-auto border border-[#474646] rounded-md px-2 py-2.5 text-l font-regular text-[#545454]"
-          type="text"
-          placeholder="Enter your Full Name"
-          value={fullName}
-          onChange={onFullNameChange}
-        />
-      </div>
+      <InputField 
+      label="Full Name"
+      type="text"
+      name="fullName"
+      placeholder="Enter your Full Name"
+      value={formData.fullName}
+      onChange={onChange}
+      />
 
-      <div className="w-full h-auto flex flex-col justify-start items-start gap-y-2">
-        <label className="text-l font-medium  text-black">Email</label>
-        <input
-          className="w-full h-auto border border-[#474646] rounded-md px-2 py-2.5 text-l font-regular text-[#545454]"
-          type="email"
-          placeholder="Enter your Email"
-          value={email}
-          onChange={onEmailChange}
-        />
-      </div>
+      <InputField 
+      label="Email"
+      type="email"
+      name="email"
+      placeholder="Enter your email"
+      value={formData.email}
+      onChange={onChange}
+      />
 
-      <div className="w-full h-auto flex flex-col justify-start items-start gap-y-2">
-        <label className="text-l font-medium text-black">
-          Choose Password
-        </label>
-        <input
-          className="w-full h-auto border border-[#474646] rounded-md px-2 py-2.5 text-l font-regular text-[#545454]"
-          type="password"
-          placeholder="Enter your Password"
-          value={password}
-          onChange={onPasswordChange}
-        />
-      </div>
+      <InputField 
+      label="Choose Password"
+      type="password"
+      name="password"
+      placeholder="Enter your Password"
+      value={formData.password}
+      onChange={onChange}
+      />
 
-      <div className="w-full h-auto flex flex-col justify-start items-start gap-y-2">
-        <label className="text-l font-medium text-black">
-          Confirm Password
-        </label>
-        <input
-          className="w-full h-auto border border-[#474646] rounded-md px-2 py-2.5 text-l font-regular text-[#545454]"
-          type="password"
-          placeholder="Confirm your Password"
-          value={confirmPassword}
-          onChange={onConfirmPasswordChange}
-        />
-      </div>
+      <InputField 
+      label="Confirm Password"
+      type="password"
+      name="confirmPassword"
+      placeholder="Confirm your Password"
+      value={formData.confirmPassword}
+      onChange={onChange}
+      />
 
       <div className="w-full h-auto flex flex-col justify-start items-start gap-y-2 mt-4 mb-1">
         <button

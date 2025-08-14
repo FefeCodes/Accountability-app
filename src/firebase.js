@@ -4,13 +4,13 @@ import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
@@ -18,6 +18,26 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const provider = new GoogleAuthProvider();
 
+export const getUserFromFirestore = async (uid) => {
+  const userRef = doc(db, "users", uid);
+  const docSnap = await getDoc(userRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    throw new Error("User not found in Firestore");
+  }
+};
+
+export const saveUserToFirestore = async (user, method, fullName = null) => {
+  const userRef = doc(db, "users", user.uid);
+  await setDoc(userRef, {
+    uid: user.uid,
+    fullName: fullName || user.displayName || "",
+    email: user.email,
+    authProvider: method,
+    createdAt: new Date().toISOString()
+  });
+};
 
 export const signInWithGoogle = async () => {
   try {
@@ -54,23 +74,3 @@ export const signUpWithEmail = async (fullName, email, password) => {
   return getUserFromFirestore (userCredential.user.uid);
 };
 
-export const saveUserToFirestore = async (user, method, fullName = null) => {
-  const userRef = doc(db, "users", user.uid);
-  await setDoc(userRef, {
-    uid: user.uid,
-    fullName: fullName || user.displayName || "",
-    email: user.email,
-    authProvider: method,
-    createdAt: new Date().toISOString()
-  });
-};
-
-export const getUserFromFirestore = async (uid) => {
-  const userRef = doc(db, "users", uid);
-  const docSnap = await getDoc(userRef);
-  if (docSnap.exists()) {
-    return docSnap.data();
-  } else {
-    throw new Error("User not found in Firestore");
-  }
-};

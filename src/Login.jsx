@@ -1,20 +1,21 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import LoginCompt from "./LoginCompt";
 import myLogo from "./assets/logo.svg";
 import { signInWithGoogle, signInWithEmail } from "./firebase";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  }
 
    const handleLogin = async () => {
     try {
-      const userData = await signInWithEmail(email, password);
+      const userData = await signInWithEmail(formData.email, formData.password);
       console.log("Email/Password User:", userData);
       navigate("/dashboard", {state: {user: userData}});
     } catch (error) {
@@ -40,10 +41,8 @@ export default function Login() {
         alt={"Icon"}
       />
       <LoginCompt
-        email={email}
-        password={password}
-        onEmailChange={handleEmailChange}
-        onPasswordChange={handlePasswordChange}
+        formData={formData}
+        onChange={handleChange}
         onSubmit={handleLogin}
         onGoogleLogin={handleGoogleLogin}
       />
