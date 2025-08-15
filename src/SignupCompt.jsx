@@ -1,13 +1,64 @@
 import googleIcon from "./assets/google-icon.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputField from "./InputField.jsx";
+import { signUpWithEmail, signInWithGoogle } from "./firebase.js";
+import { useState } from "react";
 
 export default function SignupCompt({
   formData,
-  onChange,
-  onSubmit,
-  onGoogleSignup,
+  onChange
 }) {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    const { fullName, email, password, confirmPassword } = formData;
+
+    if (!fullName || !email || !password || !confirmPassword) {
+      alert("Please fill in all fields");
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const user = await signUpWithEmail(fullName, email, password);
+      console.log("Signed up user:", user);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Signup failed:", error);
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignup = async () => {
+    setLoading(true);
+    try{
+      const user = await signInWithGoogle();
+      console.log("Google signup user:", user);
+      navigate("/dashboard");
+    }catch (error) {
+      console.error("Google signup failed:", error);
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const canSubmit =
+    formData.fullName &&
+    formData.email &&
+    formData.password &&
+    formData.confirmPassword &&
+    formData.password === formData.confirmPassword &&
+    !loading;
+
+
   return (
     <div className=" w-1/2 h-screen bg-white p-16  flex flex-col justify-center items-start">
       <h1 className="text-2xl font-bold pb-4 text-black">Welcome</h1>
@@ -51,14 +102,18 @@ export default function SignupCompt({
       <div className="w-full h-auto flex flex-col justify-start items-start gap-y-2 mt-4 mb-1">
         <button
         className="w-full h-auto bg-[#3C91E6] rounded-md p-3 text-l font-medium text-white shadow-md"
-        onClick={onSubmit}
+        type="button"
+        onClick={handleSubmit}
+        disabled={!canSubmit}
       >
-        Sign Up
+        {loading ? "Signing Up..." : "Sign Up"}
       </button>
 
       <button
         className="w-full h-auto flex flex-row justify-center items-center gap-x-2 bg-white border rounded-md p-3 text-l font-medium shadow-md"
-        onClick={onGoogleSignup}
+        onClick={handleGoogleSignup}
+        type="button"
+        disabled={loading}
       >
         <img className="w-5 h-6" src={googleIcon} alt={"Icon"} />
         Sign Up with Google
