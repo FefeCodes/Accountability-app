@@ -1,4 +1,6 @@
 import { useState } from "react";
+import eyeShow from "../../assets/eye-show.svg";
+import eyeHide from "../../assets/eye-hide.svg";
 
 export default function InputField({
   label,
@@ -7,6 +9,7 @@ export default function InputField({
   placeholder,
   value,
   onChange,
+  required = false,
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
@@ -16,30 +19,30 @@ export default function InputField({
   };
 
   return (
-    <div className="w-full h-auto flex flex-col justify-start items-start gap-y-2">
-      <label className="text-lg font-medium text-black">{label}</label>
-      <div className="relative w-full">
+    <div className="w-full space-y-2 mb-4">
+      <label className="block text-sm font-medium text-gray-700">
+        {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
+      </label>
+      <div className="relative">
         <input
-          className="w-full h-auto border border-[#474646] rounded-md px-2 py-2.5 text-l font-regular text-[#545454]"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
           type={isPassword && showPassword ? "text" : type}
           name={name}
           id={name}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          required={required}
         />
         {isPassword && (
           <button
             type="button"
             onClick={toggleShowPassword}
-            className="absolute right-2 top-1/2 -translate-y-1/2"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-100 rounded transition-colors cursor-pointer"
           >
             <img
-              src={
-                showPassword
-                  ? "/src/assets/eye-show.svg"
-                  : "/src/assets/eye-hide.svg"
-              }
+              src={showPassword ? eyeShow : eyeHide}
               alt={showPassword ? "Hide password" : "Show password"}
               className="w-5 h-5"
             />
