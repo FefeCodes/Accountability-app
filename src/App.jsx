@@ -1,48 +1,119 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./Login.jsx";
-import Signup from "./Signup.jsx";
-import Onboarding from "./Onboarding.jsx";
-import OnboardingSecond from "./OnboardingSecond.jsx";
-import OnboardingFourth from "./OnboardingFourth.jsx";
-import OnboardingThird from "./OnboardingThird.jsx";
-import OnboardingFinal from "./OnboardingFinal.jsx";
+import { AuthProvider } from "./contexts/AuthContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import LandingPage from "./components/LandingPage.jsx";
+import Login from "./app/Login.jsx";
+import Signup from "./app/Signup.jsx";
+import Dashboard from "./components/Dashboard.jsx";
+import OnboardingSecond from "./components/onboarding/OnboardingSecond.jsx";
+import Onboarding from "./components/onboarding/Onboarding.jsx";
+import OnboardingThird from "./components/onboarding/OnboardingThird.jsx";
+import OnboardingFourth from "./components/onboarding/OnboardingFourth.jsx";
+import OnboardingFinal from "./components/onboarding/OnboardingFinal.jsx";
+import ResetPassword from "./components/ResetPassword.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Login />,
+      element: <LandingPage />,
+    },
+    {
+      path: "/login",
+      element: (
+        <ProtectedRoute requireAuth={false}>
+          <Login />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/signup",
-      element: <Signup />,
+      element: (
+        <ProtectedRoute requireAuth={false}>
+          <Signup />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/reset-password",
+      element: (
+        <ProtectedRoute requireAuth={false}>
+          <ResetPassword />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <ProtectedRoute requireOnboarding={true}>
+          <Dashboard />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/onboarding-step-1",
-      element: <Onboarding />,
+      element: (
+        <ProtectedRoute>
+          <Onboarding />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/onboarding-step-2",
-      element: <OnboardingSecond />,
+      element: (
+        <ProtectedRoute>
+          <OnboardingSecond />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/onboarding-step-3",
-      element: <OnboardingThird />,
+      element: (
+        <ProtectedRoute>
+          <OnboardingThird />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/onboarding-step-4",
-      element: <OnboardingFourth />,
+      element: (
+        <ProtectedRoute>
+          <OnboardingFourth />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/onboarding-step-final",
-      element: <OnboardingFinal />,
+      element: (
+        <ProtectedRoute>
+          <OnboardingFinal />
+        </ProtectedRoute>
+      ),
     },
-    /*{
-  path: "/dashboard",
-  element: <Dashboard />
-}*/
   ]);
-  return <RouterProvider router={router} />;
+
+  return (
+    <ThemeProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </AuthProvider>
+    </ThemeProvider>
+  );
 }
 
 export default App;

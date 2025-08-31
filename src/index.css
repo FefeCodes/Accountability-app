@@ -4,5 +4,114 @@
 
 * {
   box-sizing: border-box;
-  font-family: "Manrope", sans-serif;
+  font-family: "Inter", "Manrope", sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #6b7280;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Smooth transitions */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Focus styles for better accessibility */
+button:focus,
+input:focus,
+select:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Dark mode focus styles */
+.dark button:focus,
+.dark input:focus,
+.dark select:focus {
+  outline: 2px solid #60a5fa;
+}
+
+/* Blob animation */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Toast customization for dark mode */
+.dark .Toastify__toast {
+  background-color: #374151;
+  color: #f9fafb;
+}
+
+.dark .Toastify__toast--error {
+  background-color: #dc2626;
+}
+
+.dark .Toastify__toast--success {
+  background-color: #059669;
+}
+
+.dark .Toastify__toast--warning {
+  background-color: #d97706;
+}
+
+.dark .Toastify__toast--info {
+  background-color: #2563eb;
+}
+
+.dark .Toastify__progress-bar {
+  background-color: #60a5fa;
+}
+
+.dark .Toastify__close-button {
+  color: #f9fafb;
 }
