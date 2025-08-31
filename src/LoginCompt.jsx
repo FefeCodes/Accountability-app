@@ -45,7 +45,7 @@ export default function LoginCompt({
         className="w-full h-auto bg-[#3C91E6] rounded-md p-3 text-l font-medium text-white shadow-md"
         onClick={onSubmit}
         type="button"
-        disabled={!canSubmit}
+        //disabled={!canSubmit}
       >
         {loading ? "Logging In..." : "Log In"}
       </button>

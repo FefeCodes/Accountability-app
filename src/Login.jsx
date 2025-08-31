@@ -11,23 +11,23 @@ export default function Login() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  }
+  };
 
-   const handleLogin = async () => {
+  const handleLogin = async () => {
     try {
       const userData = await signInWithEmail(formData.email, formData.password);
       console.log("Email/Password User:", userData);
-      navigate("/dashboard", {state: {user: userData}});
+      navigate("/dashboard", { state: { user: userData } });
     } catch (error) {
       alert("Login failed. Please check your email or password.");
     }
   };
 
-   const handleGoogleLogin = async () => {
+  const handleGoogleLogin = async () => {
     try {
       const userData = await signInWithGoogle();
       console.log("Google User:", userData);
-      navigate("/dashboard", { state: {user: userData} });
+      navigate("/dashboard", { state: { user: userData } });
     } catch (error) {
       alert("Google login failed. Please try again.");
     }

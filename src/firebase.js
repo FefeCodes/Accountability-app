@@ -1,7 +1,13 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
-
+import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -10,7 +16,7 @@ const firebaseConfig = {
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -35,7 +41,7 @@ export const saveUserToFirestore = async (user, method, fullName = null) => {
     fullName: fullName || user.displayName || "",
     email: user.email,
     authProvider: method,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
   });
 };
 
@@ -58,7 +64,11 @@ export const signInWithGoogle = async () => {
 
 export const signInWithEmail = async (email, password) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     const userData = await getUserFromFirestore(userCredential.user.uid);
     return userData;
   } catch (error) {
@@ -68,9 +78,12 @@ export const signInWithEmail = async (email, password) => {
 };
 
 export const signUpWithEmail = async (fullName, email, password) => {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
   await updateProfile(userCredential.user, { displayName: fullName });
   await saveUserToFirestore(userCredential.user, "email", fullName);
-  return getUserFromFirestore (userCredential.user.uid);
+  return getUserFromFirestore(userCredential.user.uid);
 };
-

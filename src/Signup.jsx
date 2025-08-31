@@ -3,18 +3,17 @@ import SignupCompt from "./SignupCompt";
 import myLogo from "./assets/logo.svg";
 
 export default function Signup() {
-
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
-    confirmPassword: ""
-  })
+    confirmPassword: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  }
+  };
 
   return (
     <div className="w-full h-screen flex flex-row justify-center items-start bg-[#F5F7FA]">
@@ -24,10 +23,7 @@ export default function Signup() {
         alt={"Icon"}
       />
 
-      <SignupCompt
-        formData={formData}
-        onChange={handleChange}
-      />
+      <SignupCompt formData={formData} onChange={handleChange} />
     </div>
   );
 }
