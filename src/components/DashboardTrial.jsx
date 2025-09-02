@@ -57,7 +57,7 @@ export default function Dashboard() {
         isDarkMode ? "bg-gray-900" : "bg-[#F5F7FA]"
       }`}
     >
-      {/* Header */}
+      
       <header
         className={`transition-colors duration-300 ${
           isDarkMode ? "bg-gray-800 shadow-gray-900" : "bg-white shadow-sm"
@@ -115,9 +115,9 @@ export default function Dashboard() {
         </div>
       </header>
 
-      {/* Main Content */}
+      
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
-        {/* Welcome Section */}
+        
         <div className="mb-6 sm:mb-8">
           <h2
             className={`text-xl sm:text-2xl font-bold mb-2 ${
@@ -131,7 +131,7 @@ export default function Dashboard() {
           </p>
         </div>
 
-        {/* Stats Grid */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <div
             className={`rounded-lg shadow p-6 transition-colors duration-300 ${
@@ -254,9 +254,9 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Content Grid */}
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          {/* Upcoming Deadlines */}
+          
           <div
             className={`rounded-lg shadow transition-colors duration-300 ${
               isDarkMode ? "bg-gray-800" : "bg-white"
@@ -317,7 +317,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Recent Activities */}
+          
           <div
             className={`rounded-lg shadow transition-colors duration-300 ${
               isDarkMode ? "bg-gray-800" : "bg-white"

@@ -220,7 +220,6 @@ const LandingPage = () => {
               </h3>
             </div>
 
-            {/* Feature 4 */}
             <div
               className={`p-6 rounded-2xl transition-colors duration-300 ${
                 isDarkMode
@@ -251,7 +250,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      
       <footer className="px-4 py-8 text-center">
         <p
           className={`text-lg font-semibold ${

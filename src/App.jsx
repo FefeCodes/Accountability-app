@@ -15,7 +15,7 @@ import ResetPassword from "./components/ResetPassword.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Partners from "./components/Partners.jsx";
-import LogOut from "./components/Logout.jsx";
+import LogOut from "./components/LogOut.jsx";
 import ConnectProfile from "./components/ConnectProfile.jsx";
 import ConnectedProfile from "./components/ConnectedProfile.jsx";
 import SeeMore from "./components/SeeMore.jsx";

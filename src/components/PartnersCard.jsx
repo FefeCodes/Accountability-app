@@ -56,9 +56,9 @@ export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
 
   return (
     <div className="w-full sm:w-3/4 lg:w-3/4 flex flex-col items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition">
-      {/* Profile Section */}
+      
       <div className="flex flex-col items-center gap-3">
-        {/* Avatar */}
+        
         <div className="w-16 h-16 rounded-full overflow-hidden border">
           <img
             src={user.image || "https://via.placeholder.com/150"}
@@ -67,7 +67,7 @@ export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
           />
         </div>
 
-        {/* User Info */}
+        
         <div className="flex flex-col items-center justify-center text-center">
           <Link
             to="/connect-profile"
@@ -81,7 +81,7 @@ export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
         </div>
       </div>
 
-      {/* Action Button */}
+      
       <div className="mt-4 w-full">{getButton()}</div>
     </div>
   );

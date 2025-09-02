@@ -12,7 +12,7 @@ export default function SideBar() {
 
   return (
     <>
-      {/* Toggle button visible on mobile */}
+      
       <button
         className="md:hidden p-2 m-2 rounded-md bg-gray-200"
         onClick={() => setIsOpen(true)}
@@ -20,23 +20,23 @@ export default function SideBar() {
         ☰
       </button>
 
-      {/* Sidebar for desktop */}
+      
       <div className="hidden md:flex h-screen w-64 bg-white shadow-md flex-col p-4">
         <SidebarContent />
       </div>
 
-      {/* Mobile Sidebar (Overlay + Drawer) */}
+      
       {isOpen && (
         <div className="fixed inset-0 z-50 flex">
-          {/* Backdrop */}
+         
           <div
             className="flex-1 bg-black bg-opacity-40"
             onClick={() => setIsOpen(false)}
           ></div>
 
-          {/* Sidebar Drawer */}
+          
           <div className="w-64 bg-white h-full shadow-lg p-4 flex flex-col">
-            {/* Close button */}
+            
             <button
               className="self-end mb-4 p-1 rounded hover:bg-gray-100"
               onClick={() => setIsOpen(false)}
@@ -57,7 +57,7 @@ function SidebarContent() {
 
   return (
     <div className="flex flex-col justify-between h-full">
-      {/* Top Section (Logo + Navigation) */}
+      
       <div>
         <div className="flex items-center gap-2 mb-8">
           <img src={logo} alt="App Logo" className="w-8 h-8" />
@@ -86,7 +86,7 @@ function SidebarContent() {
         </div>
       </div>
 
-      {/* Bottom Section */}
+      
       <div className="flex flex-col gap-2 pt-4">
         <SidebarItem
           icon={myProfile}

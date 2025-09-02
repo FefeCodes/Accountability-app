@@ -4,7 +4,7 @@ import seeMoreIcon from "../assets/arrowright.svg";
 export default function SecondContent() {
   return (
     <div className="w-full">
-      {/* Header Section */}
+      
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-semibold text-2xl sm:text-3xl">Partners</h2>
         <div className="flex items-center gap-2 text-[#545454] cursor-pointer hover:underline">
@@ -13,7 +13,7 @@ export default function SecondContent() {
         </div>
       </div>
 
-      {/* Responsive Cards Section */}
+      
       <div
         className="
           grid 

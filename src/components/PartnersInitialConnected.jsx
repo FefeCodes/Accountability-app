@@ -55,9 +55,9 @@ export default function PartnersInitialConnected({ user = {}, onButtonClick = ()
 
   return (
     <div className="w-full sm:w-3/4 lg:w-3/4 flex flex-col items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition">
-      {/* Profile Section */}
+      
       <div className="flex flex-col items-center gap-3">
-        {/* Avatar */}
+       
         <div className="w-16 h-16 rounded-full overflow-hidden border">
           <img
             src={user.image || "https://via.placeholder.com/150"}
@@ -66,7 +66,7 @@ export default function PartnersInitialConnected({ user = {}, onButtonClick = ()
           />
         </div>
 
-        {/* User Info */}
+        
         <div className="flex flex-col items-center justify-center text-center">
           <h2 className="text-sm font-semibold text-gray-800">
             {user.name || "John Doe"}
@@ -77,7 +77,7 @@ export default function PartnersInitialConnected({ user = {}, onButtonClick = ()
         </div>
       </div>
 
-      {/* Action Button */}
+      
       <div className="mt-4 w-full">{getButton()}</div>
     </div>
   );

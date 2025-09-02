@@ -37,10 +37,10 @@ export default function PartnersList() {
     try {
       setLoading(true);
 
-      // Simulate network delay
+      
       await new Promise((resolve) => setTimeout(resolve, 1200));
 
-      // Update local state to "pending"
+      
       setPartners((prev) =>
         prev.map((p) =>
           p.id === user.id ? { ...p, connectionStatus: "pending" } : p

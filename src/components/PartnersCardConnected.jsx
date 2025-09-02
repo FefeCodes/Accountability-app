@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function PartnersCardConnected({ user = {} }) {
   return (
     <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition">
-      {/* Profile Section */}
+      
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 rounded-full overflow-hidden border">
           <img
@@ -23,7 +23,7 @@ export default function PartnersCardConnected({ user = {} }) {
         </div>
       </div>
 
-      {/* Action Button */}
+      
       <div>
         <button className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition">
           Message
