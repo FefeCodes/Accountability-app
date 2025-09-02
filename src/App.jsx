@@ -14,13 +14,15 @@ import OnboardingFinal from "./components/onboarding/OnboardingFinal.jsx";
 import ResetPassword from "./components/ResetPassword.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Partners from "./components/Partners.jsx";
+import LogOut from "./components/LogOut.jsx";
+import ConnectProfile from "./components/ConnectProfile.jsx";
+import ConnectedProfile from "./components/ConnectedProfile.jsx";
+import SeeMore from "./components/SeeMore.jsx";
 
 function App() {
   const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <LandingPage />,
-    },
+    { path: "/", element: <LandingPage /> },
     {
       path: "/login",
       element: (
@@ -50,6 +52,46 @@ function App() {
       element: (
         <ProtectedRoute requireOnboarding={true}>
           <Dashboard />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/partners",
+      element: (
+        <ProtectedRoute>
+          <Partners />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/connect-profile/",
+      element: (
+        <ProtectedRoute>
+          <ConnectProfile />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/connected-profile/",
+      element: (
+        <ProtectedRoute>
+          <ConnectedProfile />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/see-more/",
+      element: (
+        <ProtectedRoute>
+          <SeeMore />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/logout",
+      element: (
+        <ProtectedRoute>
+          <LogOut />
         </ProtectedRoute>
       ),
     },
