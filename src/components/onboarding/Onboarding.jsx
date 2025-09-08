@@ -132,12 +132,13 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-16 bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-16 bg-gradient-to-br from-blue-50 to-indigo-100 p-4" role="main" aria-labelledby="onboarding-basic-info-heading">
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-      <h2 className="font-bold text-2xl lg:text-3xl text-gray-900">
+      <h1 id="onboarding-basic-info-heading" className="font-bold text-2xl lg:text-3xl text-gray-900">
         Basic Info
-      </h2>
-      <div className="w-full max-w-2xl p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-6 lg:gap-y-8">
+      </h1>
+      <section className="w-full max-w-2xl p-4 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-6 lg:gap-y-8" aria-labelledby="basic-info-form">
+        <h2 id="basic-info-form" className="sr-only">Basic info form</h2>
         <div className="w-full flex flex-col gap-y-4">
           <InputField
             label="Username or Nickname"
@@ -178,13 +179,13 @@ export default function Onboarding() {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={startCamera}
-                    className="px-6 py-3 text-blue-600 hover:bg-blue-50 rounded-lg border border-blue-200 transition-colors cursor-pointer"
+                    className="px-6 py-3 text-blue-600 hover:bg-blue-50 rounded-lg border border-blue-200 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                   >
                     Take a Picture
                   </button>
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+                    className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                   >
                     Upload file
                   </button>
@@ -209,13 +210,13 @@ export default function Onboarding() {
             {loading ? "Saving..." : "Next"}
           </button>
         </div>
-      </div>
+      </section>
 
       {/* Camera Modal */}
       {showCamera && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" role="dialog" aria-modal="true" aria-labelledby="camera-modal-title">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold mb-4">Take a Picture</h3>
+            <h2 id="camera-modal-title" className="text-lg font-semibold mb-4">Take a Picture</h2>
             <video
               ref={videoRef}
               autoPlay
@@ -226,13 +227,13 @@ export default function Onboarding() {
             <div className="flex gap-3">
               <button
                 onClick={capturePhoto}
-                className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
                 Capture
               </button>
               <button
                 onClick={stopCamera}
-                className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+                className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
                 Cancel
               </button>
@@ -240,6 +241,6 @@ export default function Onboarding() {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 }

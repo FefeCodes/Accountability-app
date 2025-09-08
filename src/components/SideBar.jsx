@@ -14,16 +14,17 @@ export default function SideBar() {
     <>
       
       <button
-        className="md:hidden p-2 m-2 rounded-md bg-gray-200"
+        className="md:hidden p-3 m-2 rounded-md bg-gray-200 hover:bg-gray-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
         onClick={() => setIsOpen(true)}
+        aria-label="Open navigation menu"
       >
         ☰
       </button>
 
       
-      <div className="hidden md:flex h-screen w-64 bg-white shadow-md flex-col p-4">
+      <nav className="hidden md:flex h-screen w-64 bg-white shadow-md flex-col p-4" aria-label="Primary">
         <SidebarContent />
-      </div>
+      </nav>
 
       
       {isOpen && (
@@ -35,17 +36,18 @@ export default function SideBar() {
           ></div>
 
           
-          <div className="w-64 bg-white h-full shadow-lg p-4 flex flex-col">
+          <nav className="w-64 bg-white h-full shadow-lg p-4 flex flex-col" aria-label="Primary">
             
             <button
-              className="self-end mb-4 p-1 rounded hover:bg-gray-100"
+              className="self-end mb-4 p-2 rounded hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               onClick={() => setIsOpen(false)}
+              aria-label="Close navigation menu"
             >
               ✕
             </button>
 
             <SidebarContent />
-          </div>
+          </nav>
         </div>
       )}
     </>

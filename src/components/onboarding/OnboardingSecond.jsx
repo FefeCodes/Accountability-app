@@ -32,14 +32,14 @@ export default function OnboardingSecond() {
   }, [userProfile]);
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-16 bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-16 bg-gradient-to-br from-blue-50 to-indigo-100 p-4" role="main" aria-labelledby="onboarding-goal-heading">
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-      <h2 className="font-bold text-2xl lg:text-3xl text-gray-900">
+      <h1 id="onboarding-goal-heading" className="font-bold text-2xl lg:text-3xl text-gray-900">
         Your Goal
-      </h2>
+      </h1>
 
-      <div className="w-full max-w-2xl p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-6 lg:gap-y-8">
-        <h2 className="text-2xl font-semibold">
+      <section className="w-full max-w-2xl p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-6 lg:gap-y-8" aria-labelledby="goal-question">
+        <h2 id="goal-question" className="text-2xl font-semibold">
           What do you want to stay accountable for?
         </h2>
 
@@ -122,7 +122,7 @@ export default function OnboardingSecond() {
             {loading ? "Saving..." : "Next"}
           </button>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

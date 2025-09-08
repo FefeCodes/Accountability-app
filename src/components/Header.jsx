@@ -31,19 +31,28 @@ export default function Header({
         <div className="flex items-center gap-2 sm:gap-4">
           
           {showAdd && (
-            <button className="p-2 hover:bg-gray-100 rounded-full">
+            <button
+              className="p-2 sm:p-2.5 hover:bg-gray-100 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              aria-label="Add new item"
+            >
               <img src={add} alt="Add" className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           )}
 
-          <button className="p-2 hover:bg-gray-100 rounded-full">
+          <button
+            className="p-2 sm:p-2.5 hover:bg-gray-100 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            aria-label="Notifications"
+          >
             <img
               src={notification}
               alt="Notifications"
               className="w-5 h-5 sm:w-6 sm:h-6"
             />
           </button>
-          <button className="p-1 rounded-full overflow-hidden w-8 h-8 sm:w-10 sm:h-10 border">
+          <button
+            className="p-1 rounded-full overflow-hidden w-8 h-8 sm:w-10 sm:h-10 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            aria-label="Account menu"
+          >
             <img
               src={user}
               alt="User"

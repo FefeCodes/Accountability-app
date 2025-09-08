@@ -1,6 +1,6 @@
-import Header from "./Header";
-import PartnersMainContent from "./PartnersMainContent";
-import SideBar from "./SideBar";
+import Header from "../Header";
+import PartnersMainContent from "./partners-compt/PartnersMainContent";
+import SideBar from "../SideBar";
 
 export default function Partners() {
   return (
@@ -11,12 +11,12 @@ export default function Partners() {
       </aside>
 
       
-      <div className="flex flex-col flex-1">
+      <main className="flex flex-col flex-1" role="main">
         <Header title="Partners" showSearch={true} showAdd={false} />
 
         <PartnersMainContent />
         
-      </div>
+      </main>
     </div>
   );
 }

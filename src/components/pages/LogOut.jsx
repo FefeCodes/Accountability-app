@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import SideBar from "./SideBar";
-import logOutIcon from "../assets/light_logout.svg";
+import SideBar from "../SideBar";
+import logOutIcon from "../../assets/light_logout.svg";
 
 export default function LogOut() {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function LogOut() {
       <SideBar />
 
       
-      <div className="flex-1 flex flex-col items-center justify-center min-h-screen bg-gray-50 p-16">
+      <main className="flex-1 flex flex-col items-center justify-center min-h-screen bg-gray-50 p-16" role="main">
         <div className="bg-white rounded-xl shadow-md p-8 w-full max-w-md text-center">
           
           <div className="flex flex-row justify-center items-center gap-2 mb-6">
@@ -50,7 +50,7 @@ export default function LogOut() {
             </button>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

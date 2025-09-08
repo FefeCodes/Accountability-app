@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // import Link
 import accountabilityHero from "../assets/accountability-hero.svg";
+import logo from "../assets/logo.svg"; // import your logo
 import {
   signInWithGoogle,
   signInWithEmail,
@@ -73,29 +74,40 @@ export default function Login() {
 
   return (
     <div
-      className={`w-full min-h-screen flex flex-col lg:flex-row justify-center items-center transition-colors duration-300 ${
+      className={`w-full min-h-screen flex flex-col transition-colors duration-300 ${
         isDarkMode
           ? "bg-gradient-to-br from-gray-900 to-gray-800"
           : "bg-gradient-to-br from-blue-50 to-indigo-100"
       }`}
     >
-      <div className="hidden lg:flex lg:w-1/2 h-screen items-center justify-center">
-        <img
-          className="w-full h-full"
-          src={accountabilityHero}
-          alt="Accountability Hero"
-        />
+      {/* ✅ Fixed Logo: Center on mobile, Left on large screens */}
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 lg:left-6 lg:translate-x-0 z-50">
+        <Link to="/">
+          <img src={logo} alt="App Logo" className="h-10 w-auto" />
+        </Link>
       </div>
 
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8">
-        <LoginCompt
-          formData={formData}
-          onChange={handleChange}
-          onSubmit={handleLogin}
-          onGoogleLogin={handleGoogleLogin}
-          onForgotPassword={handleForgotPassword}
-          loading={loading}
-        />
+      <div className="flex flex-col lg:flex-row flex-1 justify-center items-center">
+        {/* Left Side Illustration */}
+        <div className="hidden lg:flex lg:w-1/2 h-full items-center justify-center pl-6">
+          <img
+            className="w-full h-full"
+            src={accountabilityHero}
+            alt="Accountability Hero"
+          />
+        </div>
+
+        {/* Right Side Login */}
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8">
+          <LoginCompt
+            formData={formData}
+            onChange={handleChange}
+            onSubmit={handleLogin}
+            onGoogleLogin={handleGoogleLogin}
+            onForgotPassword={handleForgotPassword}
+            loading={loading}
+          />
+        </div>
       </div>
     </div>
   );

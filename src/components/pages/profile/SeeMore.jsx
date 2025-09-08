@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import ArrowLeft from "../assets/arrow-left.svg";
-import ConnectFirstContent from "./ConnectFirstContent";
-import ConnectSecondContent from "./ConnectSecondContent";
-import Header from "./Header";
-import SideBar from "./SideBar";
+import ArrowLeft from "../../../assets/arrow-left.svg";
+import SeeMoreContent from "./SeeMoreContent";
+import Header from "../../Header";
+import SideBar from "../../SideBar";
 
-export default function ConnectProfile() {
+export default function ConnectedProfile() {
   const navigate = useNavigate();
 
   return (
@@ -15,7 +14,7 @@ export default function ConnectProfile() {
         <SideBar />
       </aside>
 
-      
+     
       <div className="flex-1 md:ml-64 lg:ml-72 flex flex-col">
         
         <Header title="Partners" showSearch={true} showAdd={false} />
@@ -24,19 +23,17 @@ export default function ConnectProfile() {
         <div className="sticky top-16 z-10 w-full h-16 mt-4 ml-5 px-4 md:px-6 flex items-center justify-between bg-white shadow-sm rounded-lg">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 rounded-full hover:bg-gray-200 transition m"
+            className="p-3 md:p-2 rounded-full hover:bg-gray-200 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            aria-label="Go back"
           >
             <img src={ArrowLeft} alt="Go back" className="w-6 h-6" />
           </button>
         </div>
 
-    
-        <main className="flex-1 overflow-auto p-4 md:p-6 space-y-6 mt-4">
+        
+        <main className="flex-1 overflow-auto p-4 md:p-6 space-y-6 mt-4" role="main">
           <div className="bg-white p-4 rounded-xl shadow-sm">
-            <ConnectFirstContent />
-          </div>
-          <div className="bg-white p-4 rounded-xl shadow-sm">
-            <ConnectSecondContent />
+            <SeeMoreContent />
           </div>
         </main>
       </div>

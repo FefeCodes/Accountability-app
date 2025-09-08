@@ -1,10 +1,10 @@
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../../hooks/useAuth";
 import { signOut } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth } from "../../../config/firebase";
 import { useNavigate } from "react-router-dom";
-import myLogo from "../assets/logo.svg";
-import { useTheme } from "../hooks/useTheme";
-import ThemeToggle from "./ThemeToggle";
+import myLogo from "../../../assets/logo.svg";
+import { useTheme } from "../../../hooks/useTheme";
+import ThemeToggle from "../../ThemeToggle";
 
 export default function Dashboard() {
   const { currentUser, userProfile } = useAuth();

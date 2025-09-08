@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import star from "../assets/star.svg";
+import star from "../../../assets/star.svg";
 
 export default function ConnectedSecondContent() {
   return (

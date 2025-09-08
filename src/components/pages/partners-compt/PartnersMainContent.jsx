@@ -14,12 +14,15 @@ export default function PartnersMainContent() {
   return (
     <div className="w-full m-6">
       
-      <div className="flex gap-6 px-5 py-3 bg-white rounded-t-xl shadow-sm overflow-x-auto">
+      <div className="flex gap-3 sm:gap-6 px-3 sm:px-5 py-3 bg-white rounded-t-xl shadow-sm overflow-x-auto" role="tablist" aria-label="Partners tabs">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`whitespace-nowrap px-5 py-2 text-sm font-medium border-b-4 transition-colors focus:outline-none focus:ring-0 ${
+            role="tab"
+            aria-selected={activeTab === tab}
+            tabIndex={activeTab === tab ? 0 : -1}
+            className={`whitespace-nowrap px-4 sm:px-5 py-2 sm:py-2.5 text-sm font-medium border-b-4 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
               activeTab === tab
                 ? "border-[#3C91E6] text-[#3C91E6]"
                 : "border-transparent text-gray-600 hover:text-[#3C91E6]"
@@ -32,10 +35,10 @@ export default function PartnersMainContent() {
 
       
       <div
-        className={`mt-4 px-5 py-6 bg-white shadow-sm rounded-b-xl 
+        className={`mt-4 px-3 sm:px-5 py-6 bg-white shadow-sm rounded-b-xl 
           ${activeTab === "Connected" 
-            ? "flex flex-col w-full gap-6" 
-            : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"}`}
+            ? "flex flex-col w-full gap-4 sm:gap-6" 
+            : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"}`}
       >
         
         {activeTab === "All" && (

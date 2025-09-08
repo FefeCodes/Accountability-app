@@ -2,10 +2,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import LandingPage from "./components/LandingPage.jsx";
+import LandingPage from "./components/pages/LandingPage.jsx";
 import Login from "./app/Login.jsx";
 import Signup from "./app/Signup.jsx";
-import Dashboard from "./components/Dashboard.jsx";
+import Dashboard from "./components/pages/Dashboard.jsx";
 import OnboardingSecond from "./components/onboarding/OnboardingSecond.jsx";
 import Onboarding from "./components/onboarding/Onboarding.jsx";
 import OnboardingThird from "./components/onboarding/OnboardingThird.jsx";
@@ -14,11 +14,11 @@ import OnboardingFinal from "./components/onboarding/OnboardingFinal.jsx";
 import ResetPassword from "./components/ResetPassword.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Partners from "./components/Partners.jsx";
-import LogOut from "./components/LogOut.jsx";
-import ConnectProfile from "./components/ConnectProfile.jsx";
-import ConnectedProfile from "./components/ConnectedProfile.jsx";
-import SeeMore from "./components/SeeMore.jsx";
+import Partners from "./components/pages/Partners.jsx";
+import LogOut from "./components/pages/LogOut.jsx";
+import ConnectProfile from "./components/pages/profile/ConnectProfile.jsx";
+import ConnectedProfile from "./components/pages/profile/ConnectedProfile.jsx";
+import SeeMore from "./components/pages/profile/SeeMore.jsx";
 
 function App() {
   const router = createBrowserRouter([

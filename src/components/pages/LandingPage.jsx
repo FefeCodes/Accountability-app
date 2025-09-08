@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "../hooks/useTheme";
-import ThemeToggle from "./ThemeToggle";
+import { useTheme } from "../../hooks/useTheme";
+import ThemeToggle from "../ThemeToggle";
+import logo from "../../assets/logo.svg";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -21,14 +22,14 @@ const LandingPage = () => {
       }`}
     >
       <header
-        className={`px-4 py-6 transition-colors duration-300 ${
+        className={`px-10 py-6 transition-colors duration-300 ${
           isDarkMode ? "bg-gray-800" : "bg-white"
         } shadow-sm`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">C</span>
+            <div className="w-8 h-8 rounded-full flex items-center justify-center">
+              <img className="text-white font-bold text-sm" src={logo} alt=""/>
             </div>
             <span className="text-xl font-bold">CommitBuddy</span>
           </div>
@@ -65,15 +66,15 @@ const LandingPage = () => {
         </div>
       </header>
 
-      <section className="relative px-4 py-16 md:py-24">
+      <section className="relative px-4 py-10 md:py-20">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-20 left-80 w-60 h-60 bg-green-300 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob"></div>
+          <div className="absolute top-40 right-10 w-60 h-60 bg-blue-300 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-60 h-60 bg-purple-300 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob animation-delay-4000"></div>
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
+          <div className="text-center max-w-4xl mx-auto gap-y-1 flex flex-col items-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
               Find Your Accountability Partner
             </h1>
@@ -81,7 +82,7 @@ const LandingPage = () => {
               Achieve More, Together
             </h2>
             <p
-              className={`text-lg md:text-xl mb-8 leading-relaxed ${
+              className={` w-4/5 text-lg md:text-xl mb-8 leading-relaxed ${
                 isDarkMode ? "text-gray-300" : "text-gray-600"
               }`}
             >
@@ -92,11 +93,11 @@ const LandingPage = () => {
             </p>
             <button
               onClick={handleGetStarted}
-              className="inline-flex items-center px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+              className="inline-flex items-center px-10 py-6 bg-blue-600 text-white text-xl font-semibold rounded-full hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
             >
               Get Started for Free
               <svg
-                className="ml-2 w-5 h-5"
+                className="ml-2 w-8 h-8"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -113,10 +114,10 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="px-4 py-16">
+      <section className="px-10 py-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
                 className={`aspect-square rounded-2xl overflow-hidden ${
@@ -124,11 +125,11 @@ const LandingPage = () => {
                 } flex items-center justify-center`}
               >
                 <div
-                  className={`w-16 h-16 rounded-full ${
+                  className={`${
                     isDarkMode ? "bg-gray-600" : "bg-gray-300"
                   } flex items-center justify-center`}
                 >
-                  <span className="text-2xl">👤</span>
+                  <img className="" />
                 </div>
               </div>
             ))}
@@ -136,7 +137,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="px-4 py-16">
+      <section className="px-10 py-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             <div

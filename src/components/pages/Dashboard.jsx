@@ -1,7 +1,7 @@
 import { useState } from "react";
-import DashboardMainContent from "./DashboardMainContent.jsx";
-import Header from "./Header.jsx";
-import SideBar from "./SideBar.jsx";
+import DashboardMainContent from "./dashboard-compt/DashboardMainContent.jsx";
+import Header from "../Header.jsx";
+import SideBar from "../SideBar.jsx";
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);

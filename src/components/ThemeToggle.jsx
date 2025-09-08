@@ -6,7 +6,7 @@ const ThemeToggle = ({ className = "" }) => {
   return (
     <button
       onClick={toggleTheme}
-      className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
+      className={`p-3 sm:p-2 rounded-lg transition-all duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
         isDarkMode
           ? "bg-gray-700 hover:bg-gray-600 text-yellow-300"
           : "bg-gray-100 hover:bg-gray-200 text-gray-700"
