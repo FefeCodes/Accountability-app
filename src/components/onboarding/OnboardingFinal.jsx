@@ -14,10 +14,10 @@ export default function OnboardingFinal() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-16 bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-16 bg-gradient-to-br from-blue-50 to-indigo-100">
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
 
-      <div className="w-full max-w-2xl p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-center items-center gap-y-6 lg:gap-y-8">
+      <div className="w-9/10 sm:w-full max-w-2xl p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-center items-center gap-y-6 lg:gap-y-8 mt-20">
         <img
           src={confettiBall}
           alt="confetti ball"
@@ -29,12 +29,25 @@ export default function OnboardingFinal() {
           We are finding the best accountability partner for you
         </h2>
 
-        <div className="w-full flex justify-center items-center mt-4">
+        <div className="w-full mt-4">
           <button
             onClick={handleGoToDashboard}
-            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200 cursor-pointer"
+            className="w-full sm:w-auto flex flex-row justify-center items-center gap-x-2 px-6 sm:px-10 py-3 sm:py-5 bg-blue-600 text-white text-xl font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 cursor-pointer"
           >
             Go to Dashboard
+            <svg
+                className="ml-2 w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
           </button>
         </div>
       </div>

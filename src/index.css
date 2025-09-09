@@ -2,10 +2,6 @@
 
 @import "tailwindcss";
 
-@import "slick-carousel/slick/slick.css";
-@import "slick-carousel/slick/slick-theme.css";
-
-
 * {
   box-sizing: border-box;
   font-family: "Inter", "Manrope", sans-serif;

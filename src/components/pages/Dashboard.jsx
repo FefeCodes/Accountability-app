@@ -58,7 +58,7 @@ export default function Dashboard() {
         </header>
 
         
-        <main className="mt-16 p-6 overflow-y-auto h-[calc(100vh-4rem)]">
+        <main className="mt-16 px-1 py-2 sm:px-4 sm:py-6 overflow-y-auto h-[calc(100vh-4rem)]">
           <DashboardMainContent />
         </main>
       </div>

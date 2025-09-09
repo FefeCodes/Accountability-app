@@ -68,7 +68,7 @@ export default function InputField({
 
       <div className="relative">
         <input
-          className={`w-full px-4 py-3 pr-10 border border-gray-300 
+          className={`w-full px-4 py-3 text-base pr-10 border border-gray-300 
                       rounded-${rounded} focus-visible:outline-none focus:ring-1 focus:ring-blue-500 
                       focus:border-blue-500 transition-colors duration-200 
                       text-gray-900 placeholder-gray-500 ${className}`}
