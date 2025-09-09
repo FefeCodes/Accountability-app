@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import defaultUserIcon from "../../../assets/ui_user.svg"; // adjust path
 
 export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
   const [loading, setLoading] = useState(false);
@@ -55,19 +56,18 @@ export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
   };
 
   return (
-    <div className="w-full sm:w-3/4 lg:w-3/4 flex flex-col items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition">
-      
+    <div className="w-full sm:w-3/4 lg:w-3/4 flex flex-col items-center justify-between p-4 bg-white rounded-xl shadow-md hover:shadow-md transition">
       <div className="flex flex-col items-center gap-3">
-        
-        <div className="w-16 h-16 rounded-full overflow-hidden border">
+        {/* Profile Image */}
+        <div className="w-16 h-16 rounded-full overflow-hidden border bg-gray-100 flex items-center justify-center">
           <img
-            src={user.image || "https://via.placeholder.com/150"}
+            src={user.image || defaultUserIcon}
             alt={user.name || "User"}
             className="w-full h-full object-cover"
           />
         </div>
 
-        
+        {/* User Info */}
         <div className="flex flex-col items-center justify-center text-center">
           <Link
             to="/connect-profile"
@@ -81,7 +81,7 @@ export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
         </div>
       </div>
 
-      
+      {/* Action Button */}
       <div className="mt-4 w-full">{getButton()}</div>
     </div>
   );

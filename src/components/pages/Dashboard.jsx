@@ -20,7 +20,7 @@ export default function Dashboard() {
       
       <div className="flex flex-col flex-1 md:ml-64">
         
-        <header className="fixed top-0 left-0 right-0 md:left-64 h-16 bg-white shadow z-20 flex items-center px-4">
+        <header className="fixed top-0 left-0 right-0 md:left-64 h-20 bg-white shadow-sm z-20 flex items-center px-4">
           
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}

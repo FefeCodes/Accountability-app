@@ -1,4 +1,5 @@
 import PartnersCard from "../partners-compt/PartnersCard";
+import PartnersInitialConnected from "../partners-compt/PartnersInitialConnected"
 import seeMoreIcon from "../../../assets/arrowright.svg";
 
 export default function SecondContent() {
@@ -6,14 +7,14 @@ export default function SecondContent() {
     <div className="w-full">
       
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-semibold text-2xl sm:text-3xl">Partners</h2>
+        <h2 className="font-semibold text-2xl sm:text-2xl">Partners</h2>
         <a
           href="/partners"
-          className="flex items-center gap-2 text-[#545454] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded px-1"
+          className="flex items-center gap-2 text-[#545454] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded px-1 gap-x-1"
           aria-label="See more partners"
         >
-          <span>See More</span>
-          <img src={seeMoreIcon} alt="" aria-hidden="true" className="w-4 h-4" />
+          <span className="text-base">See More</span>
+          <img src={seeMoreIcon} alt="" aria-hidden="true" className="w-6 h-6" />
         </a>
       </div>
 
@@ -29,8 +30,8 @@ export default function SecondContent() {
         "
       >
         <PartnersCard />
-        <PartnersCard />
-        <PartnersCard />
+        <PartnersInitialConnected />
+        <PartnersInitialConnected />
         <PartnersCard />
       </div>
     </div>
