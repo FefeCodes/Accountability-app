@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"
 import ProgressBar from "../atoms/ProgressBar.jsx";
+import logo from "../../assets/logo.svg"
 import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth.js";
 import { updateOnboardingProgress } from "../../config/firebase";
@@ -85,6 +87,13 @@ const toggleGoal = (goal) => {
   return (
     <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100" role="main" aria-labelledby="onboarding-goal-heading">
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+
+      <div className="fixed top-30 left-3/4 -translate-x-3/4 lg:left-20 lg:translate-x-0 z-50">
+        <Link to="/">
+          <img src={logo} alt="App Logo" className="h-10 w-auto" />
+        </Link>
+      </div>
+
       <h2 id="onboarding-goal-heading" className="font-bold text-2xl lg:text-3xl text-gray-900">
         Your Goals
       </h2>

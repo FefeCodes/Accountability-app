@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"
 import ProgressBar from "../atoms/ProgressBar.jsx";
 import confettiBall from "../../assets/confetti-ball.svg";
+import logo from "../../assets/logo.svg"
 import { toast } from "react-toastify";
 
 export default function OnboardingFinal() {
@@ -16,6 +18,12 @@ export default function OnboardingFinal() {
   return (
     <div className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-16 bg-gradient-to-br from-blue-50 to-indigo-100">
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+
+      <div className="fixed top-30 left-3/4 -translate-x-3/4 lg:left-20 lg:translate-x-0 z-50">
+        <Link to="/">
+          <img src={logo} alt="App Logo" className="h-10 w-auto" />
+        </Link>
+      </div>
 
       <div className="w-9/10 sm:w-full max-w-2xl p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-center items-center gap-y-6 lg:gap-y-8 mt-20">
         <img
