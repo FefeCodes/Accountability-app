@@ -13,6 +13,10 @@ export default function LoadingSpinner({ size = "md", color = "blue" }) {
   };
 
   return (
-    <div className={`animate-spin rounded-full border-b-2 ${sizeClasses[size]} ${colorClasses[color]}`}></div>
+    <div
+      role="status"
+      aria-live="polite"
+      className={`animate-spin rounded-full border-b-2 ${sizeClasses[size]} ${colorClasses[color]}`}
+    />
   );
 }

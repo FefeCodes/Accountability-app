@@ -1,6 +1,7 @@
 import googleIcon from "../assets/google-icon.svg";
 import { Link } from "react-router-dom";
 import InputField from "./forms/InputField.jsx";
+import { useState, useEffect } from "react";
 
 export default function LoginCompt({
   formData,
@@ -10,12 +11,47 @@ export default function LoginCompt({
   onForgotPassword,
   loading = false,
 }) {
-  const canSubmit = formData.email && formData.password && !loading;
+  const [passwordErrors, setPasswordErrors] = useState([]);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+
+  const canSubmit =
+    formData.email &&
+    formData.password &&
+    isPasswordValid && // ✅ only allow submit if valid
+    !loading;
+
+  // ✅ Password Validation Logic
+  useEffect(() => {
+    const errors = [];
+    const password = formData.password;
+
+    if (!password) {
+      setPasswordErrors([]);
+      setIsPasswordValid(false);
+      return;
+    }
+
+    if (password.length < 8) {
+      errors.push("Password must be at least 8 characters long.");
+    }
+    if (!/[A-Z]/.test(password)) {
+      errors.push("Password must contain at least one uppercase letter.");
+    }
+    if (!/[0-9]/.test(password)) {
+      errors.push("Password must contain at least one number.");
+    }
+    if (!/[!@#$%^&*(),.?\":{}|<>]/.test(password)) {
+      errors.push("Password must contain at least one special character.");
+    }
+
+    setPasswordErrors(errors);
+    setIsPasswordValid(errors.length === 0);
+  }, [formData.password]);
 
   return (
-    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 lg:p-8 flex flex-col justify-center">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 lg:p-8 flex flex-col justify-center gap-y-1">
+      <div className="text-center flex flex-col gap-y-1 mb-8">
+        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">
           Welcome back
         </h1>
         <p className="text-gray-600">
@@ -43,6 +79,22 @@ export default function LoginCompt({
         required={true}
       />
 
+      {/* ❌ Show errors if invalid */}
+      {formData.password && passwordErrors.length > 0 && (
+        <ul className="mt-2 mb-2 text-sm text-red-500 space-y-1">
+          {passwordErrors.map((err, idx) => (
+            <li key={idx}>• {err}</li>
+          ))}
+        </ul>
+      )}
+
+      {/* ✅ Show success if valid */}
+      {formData.password && isPasswordValid && (
+        <p className="mt-2 mb-2 text-sm text-green-600 font-medium">
+          ✅ Strong password
+        </p>
+      )}
+
       <div className="flex justify-end mb-6">
         <button
           onClick={onForgotPassword}
@@ -52,7 +104,7 @@ export default function LoginCompt({
         </button>
       </div>
 
-      <div className="space-y-4 mt-6">
+      <div className="space-y-4 mt-1">
         <button
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           onClick={onSubmit}
@@ -84,7 +136,7 @@ export default function LoginCompt({
         </button>
       </div>
 
-      <p className="text-center text-gray-600 mt-8">
+      <p className="text-center text-gray-600 mt-1">
         Don't have an account?{" "}
         <Link
           to="/signup"

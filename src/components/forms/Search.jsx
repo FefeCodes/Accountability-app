@@ -35,6 +35,7 @@ export default function Search() {
       icon={searchIcon}
       onIconClick={handleSearch}
       rounded="full" 
+      className="mb-0"
     />
   );
 }

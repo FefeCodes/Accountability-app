@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"
 import ProgressBar from "../atoms/ProgressBar.jsx";
 import Select from "../forms/Select.jsx";
+import logo from "../../assets/logo.svg"
 import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { updateOnboardingProgress } from "../../config/firebase";
@@ -67,12 +69,18 @@ export default function OnboardingFourth() {
   }, [userProfile]);
 
   return (
-    <div className="w-full h-screen flex flex-col justify-start items-center gap-y-16 bg-[#F5F7FA]">
+    <div className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100">
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
 
-      <h2 className="font-bold text-3xl">Availability & Preferences</h2>
+      <div className="fixed top-30 left-3/4 -translate-x-3/4 lg:left-20 lg:translate-x-0 z-50">
+        <Link to="/">
+          <img src={logo} alt="App Logo" className="h-10 w-auto" />
+        </Link>
+      </div>
 
-      <div className="w-1/2 p-15 bg-white rounded-3xl shadow-sm flex flex-col justify-start items-start gap-y-8">
+      <h2 className="font-bold text-2xl lg:text-3xl text-gray-900">Availability & Preferences</h2>
+
+      <div className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-10 lg:gap-y-8">
         <div className="w-full h-auto flex flex-col gap-y-4">
           <Select
             label="Timezone"
@@ -103,10 +111,10 @@ export default function OnboardingFourth() {
           />
         </div>
 
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex gap-2 flex-wrap justify-between items-center mt-6">
           <button
             onClick={() => navigate("/onboarding-step-3")}
-            className="px-8 py-2.5 text-[#3C91E6] border border-[#3C91E6] text-xl rounded-sm hover:bg-[#3C91E6] hover:text-white transition-colors"
+            className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 text-blue-600 border border-blue-600 font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-colors cursor-pointer"
           >
             Back
           </button>
@@ -152,7 +160,7 @@ export default function OnboardingFourth() {
               !formData.checkInTime ||
               !formData.communicationMethod
             }
-            className="px-8 py-2.5 bg-[#3C91E6] text-white text-xl rounded-sm hover:bg-[#328ae1] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full sm:w-auto px-4 sm:px-8 py-2 sm:py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {loading ? "Saving..." : "Finish"}
           </button>

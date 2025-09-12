@@ -1,7 +1,7 @@
 import { useState } from "react";
-import DashboardMainContent from "./DashboardMainContent.jsx";
-import Header from "./Header.jsx";
-import SideBar from "./SideBar.jsx";
+import DashboardMainContent from "./dashboard-compt/DashboardMainContent.jsx";
+import Header from "../Header.jsx";
+import SideBar from "../SideBar.jsx";
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -20,7 +20,7 @@ export default function Dashboard() {
       
       <div className="flex flex-col flex-1 md:ml-64">
         
-        <header className="fixed top-0 left-0 right-0 md:left-64 h-16 bg-white shadow z-20 flex items-center px-4">
+        <header className="fixed top-0 left-0 right-0 md:left-64 h-20 bg-white shadow-sm z-20 flex items-center">
           
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -58,7 +58,7 @@ export default function Dashboard() {
         </header>
 
         
-        <main className="mt-16 p-6 overflow-y-auto h-[calc(100vh-4rem)]">
+        <main className="mt-16 px-1 py-2 sm:px-4 sm:py-6 overflow-y-auto h-[calc(100vh-4rem)]">
           <DashboardMainContent />
         </main>
       </div>

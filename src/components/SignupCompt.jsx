@@ -18,9 +18,9 @@ export default function SignupCompt({
     !loading;
 
   return (
-    <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl p-6 lg:p-8 flex flex-col justify-center">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+    <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl p-6 lg:p-8 flex flex-col justify-center gap-y-1">
+      <div className="text-center flex flex-col gap-y-1 mb-8">
+        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">
           Welcome
         </h1>
         <p className="text-gray-600">
@@ -68,7 +68,7 @@ export default function SignupCompt({
         required={true}
       />
 
-      <div className="space-y-4 mt-6">
+      <div className="space-y-4 mt-1">
         <button
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           type="button"
@@ -100,7 +100,7 @@ export default function SignupCompt({
         </button>
       </div>
 
-      <p className="text-center text-gray-600 mt-8">
+      <p className="text-center text-gray-600 mt-1">
         Already have an account?{" "}
         <Link
           to="/login"
