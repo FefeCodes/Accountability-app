@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // 👈 add Link
+import { useNavigate, Link } from "react-router-dom"; // add Link
 import SignupCompt from "../components/SignupCompt";
 import accountabilityHero from "../assets/accountability-hero.svg";
-import logo from "../assets/logo.svg"; // 👈 import your logo
+import logo from "../assets/logo.svg"; // import your logo
 import { signUpWithEmail, signInWithGoogle } from "../config/firebase";
 import { useAuth } from "../hooks/useAuth";
 import { useTheme } from "../hooks/useTheme";

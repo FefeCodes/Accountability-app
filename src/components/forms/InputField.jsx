@@ -57,8 +57,11 @@ export default function InputField({
     setMessages(newMessages);
   }, [value, password, isPassword, name]);
 
+  // ✅ Default mb-4 unless overridden
+  const containerClasses = `w-full space-y-1 ${className || "mb-4"}`;
+
   return (
-    <div className="w-full space-y-1 mb-4">
+    <div className={containerClasses}>
       {label && (
         <label className="block text-sm font-medium text-gray-700">
           {label}
@@ -71,7 +74,7 @@ export default function InputField({
           className={`w-full px-4 py-3 text-base pr-10 border border-gray-300 
                       rounded-${rounded} focus-visible:outline-none focus:ring-1 focus:ring-blue-500 
                       focus:border-blue-500 transition-colors duration-200 
-                      text-gray-900 placeholder-gray-500 ${className}`}
+                      text-gray-900 placeholder-gray-500`}
           type={isPassword && showPassword ? "text" : type}
           name={name}
           id={name}

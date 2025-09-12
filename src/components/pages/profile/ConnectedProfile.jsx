@@ -1,44 +1,85 @@
-import { useNavigate } from "react-router-dom";
-import ArrowLeft from "../../../assets/arrow-left.svg";
-import ConnectedFirstContent from "./ConnectedFirstContent.jsx";
-import ConnectedSecondContent from "./ConnectedSecondContent.jsx";
-import Header from "../../Header.jsx";
-import SideBar from "../../SideBar.jsx";
+import { useState } from "react";
+import Header from "../../Header";
+import SideBar from "../../SideBar";
+import ConnectedProfileMain from "./ConnectedProfileMain";
 
 export default function ConnectedProfile() {
-  const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-     
-      <aside className="hidden md:flex md:w-64 lg:w-72 bg-white shadow-md fixed h-full">
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden fixed top-4 left-4 z-30 p-3 rounded-full bg-white shadow-lg hover:bg-gray-50"
+        onClick={() => setIsMobileMenuOpen(true)}
+        aria-label="Open navigation menu"
+      >
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+
+      {/* Mobile Sidebar Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 flex md:hidden">
+          <div
+            className="flex-1 bg-black bg-opacity-50"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <div className="w-64 bg-white h-full shadow-xl">
+            <div className="flex justify-end p-4">
+              <button
+                className="p-2 rounded-full hover:bg-gray-100"
+                onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Close navigation menu"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="px-4">
+              <SideBar />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Desktop Sidebar (fixed) */}
+      <aside className="hidden md:block fixed top-0 left-0 h-screen w-64 bg-white shadow-md z-30">
         <SideBar />
       </aside>
 
-      
-      <div className="flex-1 md:ml-64 lg:ml-72 flex flex-col">
-        
-        <Header title="Partners" showSearch={true} showAdd={false} />
-
-        
-        <div className="sticky top-16 z-10 w-full h-16 mt-4 ml-5 px-4 md:px-6 flex items-center justify-between bg-white shadow-sm rounded-lg">
-          <button
-            onClick={() => navigate(-1)}
-            className="p-3 md:p-2 rounded-full hover:bg-gray-200 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-            aria-label="Go back"
-          >
-            <img src={ArrowLeft} alt="Go back" className="w-6 h-6" />
-          </button>
+      {/* Main content */}
+      <div className="flex flex-col flex-1 md:ml-50">
+        {/* Fixed header */}
+        <div className="fixed top-0 left-0 right-0 md:left-64 z-20 bg-white shadow-sm">
+          <Header title="Partners" />
         </div>
 
-        
-        <main className="flex-1 overflow-auto p-4 md:p-6 space-y-6 mt-4" role="main">
-          <div className="bg-white p-4 rounded-xl shadow-sm">
-            <ConnectedFirstContent />
-          </div>
-          <div className="bg-white p-4 rounded-xl shadow-sm">
-            <ConnectedSecondContent />
-          </div>
+        {/* Page Content */}
+        <main className="flex-1 overflow-y-auto">
+          <ConnectedProfileMain />
         </main>
       </div>
     </div>

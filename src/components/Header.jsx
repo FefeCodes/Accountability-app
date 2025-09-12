@@ -8,7 +8,7 @@ export default function Header({ title = "Dashboard Overview" }) {
     <header className="w-full h-20 px-4 md:px-6 flex items-center justify-between bg-white">
       {/* Title */}
       <div className="flex-shrink-0">
-        <p className="text-base md:text-2xl font-semibold text-gray-800">
+        <p className="text-base md:text-3xl font-semibold text-gray-800">
           {title}
         </p>
       </div>

@@ -32,7 +32,7 @@ export default function OnboardingFinal() {
         <div className="w-full mt-4">
           <button
             onClick={handleGoToDashboard}
-            className="w-full sm:w-auto flex flex-row justify-center items-center gap-x-2 px-6 sm:px-10 py-3 sm:py-5 bg-blue-600 text-white text-xl font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 cursor-pointer"
+            className="w-full sm:w-full flex flex-row justify-center items-center gap-x-2 px-6 sm:px-10 py-3 sm:py-5 bg-blue-600 text-white text-xl font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 cursor-pointer"
           >
             Go to Dashboard
             <svg
