@@ -2,7 +2,7 @@ import userIcon from "../../../assets/ui_user.svg";
 
 export default function ConnectFirstContent(){
     return(
-        <div className="flex flex-col sm:flex-row items-start justify-between p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
+        <div className="w-full flex flex-col sm:flex-row items-start justify-between p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
             {/* Profile Image */}
             <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-6">
                 <div className="rounded-full overflow-hidden w-16 h-16 sm:w-20 sm:h-20 border-2 border-gray-200">

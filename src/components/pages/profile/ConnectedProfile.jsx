@@ -71,14 +71,14 @@ export default function ConnectedProfile() {
       </aside>
 
       {/* Main content */}
-      <div className="flex flex-col flex-1 md:ml-50">
+      <div className="flex flex-col">
         {/* Fixed header */}
         <div className="fixed top-0 left-0 right-0 md:left-64 z-20 bg-white shadow-sm">
           <Header title="Partners" />
         </div>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="px-2 sm:py-2 overflow-y-auto">
           <ConnectedProfileMain />
         </main>
       </div>

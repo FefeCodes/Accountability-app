@@ -7,9 +7,9 @@ export default function ConnectedProfileMain() {
     const navigate = useNavigate();
 
   return (
-    <div className="max-w-4xl mx-auto">
-        <div className="fixed top-20 md:top-24 left-0 right-0 md:left-50 z-10 bg-gray-100">
-                <div className="max-w-4xl mx-auto mt-2">
+    <div className="w-full">
+        
+                <div className="fixed top-20 md:top-26 left-0 right-0 z-10 px-8 md:px-12 md:ml-64 md:w-[calc(100%-16rem)]">
                   <button
                     onClick={() => navigate("/partners")}
                     className="w-full h-auto bg-white flex items-center gap-3 px-4 py-4 md:px-4 md:py-6 rounded-xl hover:bg-gray-50 transition"
@@ -20,9 +20,8 @@ export default function ConnectedProfileMain() {
                     </span>
                   </button>
                 </div>
-              </div>
 
-    <div className="pt-20 md:pt-52 space-y-6">
+    <div className="pt-45 px-8 md:px-10 md:ml-64 space-y-6">
       <ConnectedFirstContent />
       <ConnectedSecondContent />
     </div>

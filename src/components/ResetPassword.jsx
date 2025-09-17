@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { confirmPasswordReset } from "firebase/auth";
+import { confirmPasswordReset, verifyPasswordResetCode } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { toast } from "react-toastify";
 import InputField from "./forms/InputField.jsx";
@@ -15,12 +15,23 @@ export default function ResetPassword() {
   });
 
   const oobCode = searchParams.get("oobCode");
+  const [verified, setVerified] = useState(false);
 
   useEffect(() => {
     if (!oobCode) {
       toast.error("Invalid reset link. Please request a new password reset.");
       navigate("/login");
+      return;
     }
+
+    verifyPasswordResetCode(auth, oobCode)
+    .then(() => {
+      setVerified(true);
+    })
+    .catch(()=> {
+      toast.error("This reset link is invalid or expired. Please request a new one.");
+      navigate("/login");
+    })
   }, [oobCode, navigate]);
 
   const handleChange = (e) => {
@@ -74,8 +85,12 @@ export default function ResetPassword() {
     }
   };
 
-  if (!oobCode) {
-    return null;
+  if (!verified) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-600">Validating reset link...</p>
+      </div>
+    );
   }
 
   return (
