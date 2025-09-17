@@ -8,40 +8,30 @@ export default function Partners() {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      {/* Sidebar for Desktop */}
-      <aside className="hidden md:block h-screen">
+      {/* Desktop sidebar */}
+      <aside className="hidden md:block fixed top-0 left-0 h-screen w-64 z-30">
         <SideBar />
       </aside>
 
-      {/* Sidebar Drawer for Mobile */}
+      {/* Mobile drawer */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-40 flex md:hidden">
-          {/* Overlay */}
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50"
-            onClick={() => setSidebarOpen(false)}
-          ></div>
-
-          {/* Drawer */}
-          <div className="relative z-50 w-64 bg-white shadow-lg h-full">
+          <div className="flex-1 bg-black bg-opacity-50" onClick={() => setSidebarOpen(false)} />
+          <div className="w-64 bg-white h-full shadow-xl">
             <SideBar />
           </div>
         </div>
       )}
 
-      {/* Main Content */}
-      <main className="flex flex-col flex-1" role="main">
-        <Header
-          title="Partners"
-          onMenuClick={() => setSidebarOpen(true)}
-           // Pass toggle for mobile
-        />
-
-        {/* Scrollable Area */}
-        <div className="px-2 sm:px-4 sm:py-2 overflow-y-auto h-[calc(100vh-4rem)]">
+      {/* Main area */}
+      <div className="flex flex-col flex-1 md:ml-64" role="main">
+        <div className="fixed top-0 left-0 right-0 md:left-64 z-20">
+          <Header title="Partners" onMenuClick={() => setSidebarOpen(true)} />
+        </div>
+        <div className="mt-20 px-2 sm:px-4 sm:py-2 overflow-y-auto h-[calc(100vh-5rem)]">
           <PartnersMainContent />
         </div>
-      </main>
+      </div>
     </div>
   );
 }

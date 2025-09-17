@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowLeft from "../../../assets/arrow-left.svg";
 import SeeMoreContent from "./SeeMoreContent";
@@ -6,6 +7,7 @@ import SideBar from "../../SideBar";
 
 export default function SeeMore() {
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -14,16 +16,26 @@ export default function SeeMore() {
         <SideBar />
       </aside>
 
+      {/* Mobile drawer */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-40 flex md:hidden">
+          <div className="flex-1 bg-black bg-opacity-50" onClick={() => setSidebarOpen(false)} />
+          <div className="w-64 bg-white h-full shadow-xl">
+            <SideBar />
+          </div>
+        </div>
+      )}
+
       {/* Main content */}
       <div className="flex flex-col flex-1 md:ml-64">
         {/* Fixed header */}
         <div className="fixed top-0 left-0 right-0 md:left-64 z-20 bg-white shadow-sm">
-          <Header title="Partners" showSearch={true} showAdd={false} />
+          <Header title="Partners" onMenuClick={() => setSidebarOpen(true)} />
         </div>
 
         {/* Fixed back button bar */}
-        <div className="fixed top-20 md:top-26 left-0 right-0 md:left-64 z-10 bg-gray-100">
-          <div className="max-w-4xl mx-auto mt-2">
+        <div className="w-full px-2 sm:py-2 overflow-y-auto">
+          <div className="fixed top-20 left-0 right-0 z-10 px-4 sm:px-8 md:px-12 md:ml-64 md:w-[calc(100%-16rem)]">
             <button
               onClick={() => navigate("/connected-profile")}
               className="w-full h-auto bg-white flex items-center gap-3 px-4 py-4 md:px-4 md:py-6 rounded-xl hover:bg-gray-50 transition"
@@ -37,13 +49,9 @@ export default function SeeMore() {
         </div>
 
         {/* Scrollable content */}
-        <main className="flex-1 overflow-y-auto">
-          <div className="pt-20 md:pt-52 space-y-6 max-w-4xl mx-auto">
-            <div className="bg-white p-4 rounded-xl shadow-sm">
-              <SeeMoreContent />
-            </div>
-          </div>
-        </main>
+        <div className="pt-44 px-4 sm:px-8 md:px-12 space-y-6">
+          <SeeMoreContent />
+        </div>
       </div>
     </div>
   );

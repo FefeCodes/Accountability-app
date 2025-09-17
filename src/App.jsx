@@ -19,6 +19,7 @@ import LogOut from "./components/pages/LogOut.jsx";
 import ConnectProfile from "./components/pages/profile/ConnectProfile.jsx";
 import ConnectedProfile from "./components/pages/profile/ConnectedProfile.jsx";
 import SeeMore from "./components/pages/profile/SeeMore.jsx";
+import ForgotPassword from "./components/ForgotPasword.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,25 +27,25 @@ function App() {
     {
       path: "/login",
       element: (
-        <ProtectedRoute requireAuth={false}>
           <Login />
-        </ProtectedRoute>
       ),
     },
     {
       path: "/signup",
       element: (
-        <ProtectedRoute requireAuth={false}>
           <Signup />
-        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/forgot-password",
+      element: (
+          <ForgotPassword />
       ),
     },
     {
       path: "/reset-password",
       element: (
-        <ProtectedRoute requireAuth={false}>
           <ResetPassword />
-        </ProtectedRoute>
       ),
     },
     {

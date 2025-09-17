@@ -141,12 +141,19 @@ useEffect(() => {
   };
 
   return (
-    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100" role="main" aria-labelledby="onboarding-basic-info-heading">
+    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-6 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100" role="main" aria-labelledby="onboarding-basic-info-heading">
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
 
-      <div className="fixed top-30 left-3/4 -translate-x-3/4 lg:left-20 lg:translate-x-0 z-50">
+      {/* Mobile: centered logo */}
+      <div className="lg:hidden w-full flex justify-center pt-4">
         <Link to="/">
-          <img src={logo} alt="App Logo" className="h-10 w-auto" />
+          <img src={logo} alt="App Logo" className="h-10 w-10" />
+        </Link>
+      </div>
+      {/* Desktop: top-left logo */}
+      <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
+        <Link to="/">
+          <img src={logo} alt="App Logo" className="h-10 w-10" />
         </Link>
       </div>
 

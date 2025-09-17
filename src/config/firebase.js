@@ -13,7 +13,6 @@ import {
   doc,
   setDoc,
   getDoc,
-  updateDoc,
 } from "firebase/firestore";
 import {
   handleFirebaseOperation,
@@ -145,11 +144,10 @@ export const updateOnboardingProgress = async (uid, step, data = {}) => {
     };
 
     if (step === 5) {
-      // Final step
       updateData.onboardingCompleted = true;
     }
 
-    await updateDoc(userRef, updateData);
+    await setDoc(userRef, updateData, { merge: true });
   }, "Failed to update onboarding progress");
 
   if (!result.success) {
@@ -160,10 +158,14 @@ export const updateOnboardingProgress = async (uid, step, data = {}) => {
 export const updateUserProfile = async (uid, data) => {
   const result = await handleFirebaseOperation(async () => {
     const userRef = doc(db, "users", uid);
-    await updateDoc(userRef, {
-      ...data,
-      updatedAt: new Date().toISOString(),
-    });
+    await setDoc(
+      userRef,
+      {
+        ...data,
+        updatedAt: new Date().toISOString(),
+      },
+      { merge: true }
+    );
   }, "Failed to update profile");
 
   if (!result.success) {
@@ -173,7 +175,12 @@ export const updateUserProfile = async (uid, data) => {
 
 export const sendPasswordReset = async (email) => {
   const result = await handleFirebaseOperation(async () => {
-    await sendPasswordResetEmail(auth, email);
+    const actionCodeSettings = {
+      url: `${window.location.origin}/reset-password`,
+      handleCodeInApp: true,
+    }
+
+    await sendPasswordResetEmail(auth, email, actionCodeSettings);
     showSuccessToast("Password reset email sent! Check your inbox.");
   }, "Failed to send password reset email");
 

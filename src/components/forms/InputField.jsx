@@ -14,7 +14,7 @@ export default function InputField({
   onIconClick,
   rounded = "lg",
   className = "",
-  password = "", // ✅ for confirm password field
+  password = "",
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [messages, setMessages] = useState([]);

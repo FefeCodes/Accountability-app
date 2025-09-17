@@ -42,12 +42,19 @@ export default function OnboardingThird() {
   };
 
   return (
-    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100" role="main" aria-labelledby="onboarding-style-heading">
+    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-6 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100" role="main" aria-labelledby="onboarding-style-heading">
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
 
-      <div className="fixed top-30 left-3/4 -translate-x-3/4 lg:left-20 lg:translate-x-0 z-50">
+      {/* Mobile: centered logo */}
+      <div className=" lg:hidden w-full flex justify-center pt-4">
         <Link to="/">
-          <img src={logo} alt="App Logo" className="h-10 w-auto" />
+          <img src={logo} alt="App Logo" className="h-10 w-10" />
+        </Link>
+      </div>
+      {/* Desktop: top-left logo */}
+      <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
+        <Link to="/">
+          <img src={logo} alt="App Logo" className="h-10 w-10" />
         </Link>
       </div>
 
@@ -55,7 +62,7 @@ export default function OnboardingThird() {
         Your Style
       </h2>
 
-      <section className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-10 lg:gap-y-8" aria-labelledby="style-question">
+      <section className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-7 lg:gap-y-8" aria-labelledby="style-question">
         <h2 id="style-question" className="text-xl font-semibold">
           What styles keep you accountable?
         </h2>

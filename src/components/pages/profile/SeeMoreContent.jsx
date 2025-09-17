@@ -1,7 +1,6 @@
 export default function SeeMoreContent() {
   return (
-    <div className="w-full h-auto px-8 py-5 flex flex-col gap-y-6">
-        <div className="flex flex-col gap-y-6">
+        <div className="w-full h-auto px-8 py-5 flex flex-col gap-y-6 bg-white p-4 rounded-xl shadow-sm">
           <h4 className="font-semibold text-xl">Shared Goal</h4>
           <ol className="list-decimal pl-5 space-y-3">
             <li>
@@ -47,6 +46,5 @@ export default function SeeMoreContent() {
             </li>
           </ol>
         </div>
-    </div>
   );
 }

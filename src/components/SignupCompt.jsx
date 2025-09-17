@@ -66,6 +66,7 @@ export default function SignupCompt({
         value={formData.confirmPassword}
         onChange={onChange}
         required={true}
+        password={formData.password}
       />
 
       <div className="space-y-4 mt-1">

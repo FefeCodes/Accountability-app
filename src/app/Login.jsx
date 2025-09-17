@@ -4,7 +4,6 @@ import accountabilityHero from "../assets/accountability-hero.svg";
 import {
   signInWithGoogle,
   signInWithEmail,
-  sendPasswordReset,
 } from "../config/firebase";
 import LoginCompt from "../components/LoginCompt";
 import { useAuth } from "../hooks/useAuth";
@@ -58,19 +57,6 @@ export default function Login() {
     }
   };
 
-  const handleForgotPassword = async () => {
-    if (!formData.email) {
-      console.error("Email is required for password reset");
-      return;
-    }
-
-    try {
-      await sendPasswordReset(formData.email);
-    } catch (error) {
-      console.error("Password Reset Error:", error);
-    }
-  };
-
   return (
     <div
       className={`w-full min-h-screen flex flex-col lg:flex-row justify-center items-center transition-colors duration-300 ${
@@ -79,6 +65,15 @@ export default function Login() {
           : "bg-gradient-to-br from-blue-50 to-indigo-100"
       }`}
     >
+      {/* Mobile: centered logo */}
+      <div className="block lg:hidden w-full flex justify-center pt-4">
+        <img src={AppLogo} alt="App Logo" className="h-12 w-12" />
+      </div>
+      {/* Desktop: top-left logo */}
+      <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
+        <img src={AppLogo} alt="App Logo" className="h-12 w-12" />
+      </div>
+
       <div className="hidden lg:flex lg:w-1/2 h-screen items-center justify-center">
         <img
           className="w-full h-full"
@@ -93,8 +88,6 @@ export default function Login() {
           onChange={handleChange}
           onSubmit={handleLogin}
           onGoogleLogin={handleGoogleLogin}
-          onForgotPassword={handleForgotPassword}
-          loading={loading}
         />
       </div>
     </div>
