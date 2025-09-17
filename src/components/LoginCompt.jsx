@@ -9,13 +9,7 @@ export default function LoginCompt({
   onGoogleLogin,
   loading = false,
 }) {
-  
-
-  const canSubmit =
-    formData.email &&
-    formData.password &&
-    !loading;
-
+  const canSubmit = formData.email && formData.password && !loading;
 
   return (
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 lg:p-8 flex flex-col justify-center gap-y-1">
@@ -50,7 +44,7 @@ export default function LoginCompt({
 
       <div className="flex justify-end mb-6">
         <Link
-        to="/forgot-password"
+          to="/forgot-password"
           className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"
         >
           Forgot password?

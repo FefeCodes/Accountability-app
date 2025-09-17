@@ -43,18 +43,24 @@
     border-color 0.2s ease;
 }
 
-/* Focus styles for better accessibility */
-button:focus,
-input:focus,
-select:focus {
+/* Remove default Tailwind ring focus outline */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Custom focus styles for better accessibility */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
 /* Dark mode focus styles */
-.dark button:focus,
-.dark input:focus,
-.dark select:focus {
+.dark button:focus-visible,
+.dark input:focus-visible,
+.dark select:focus-visible {
   outline: 2px solid #60a5fa;
 }
 
@@ -114,4 +120,13 @@ select:focus {
 
 .dark .Toastify__close-button {
   color: #f9fafb;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }

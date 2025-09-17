@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DashboardMainContent from "./dashboard-compt/DashboardMainContent.jsx";
 import Header from "../Header.jsx";
 import SideBar from "../SideBar.jsx";
@@ -6,27 +6,55 @@ import SideBar from "../SideBar.jsx";
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        setSidebarOpen(false);
+      }
+    };
+
+    if (sidebarOpen) {
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
+    };
+  }, [sidebarOpen]);
+
   return (
     <div className="flex h-screen bg-gray-50">
-      {/* Desktop sidebar */}
       <aside className="hidden md:block fixed top-0 left-0 h-screen w-64 z-30">
         <SideBar />
       </aside>
 
-      {/* Mobile drawer */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 z-40 flex md:hidden">
-          <div className="flex-1 bg-black bg-opacity-50" onClick={() => setSidebarOpen(false)} />
-          <div className="w-64 h-full bg-white shadow-xl">
-            <SideBar />
-          </div>
-        </div>
-      )}
+      <div
+        className={`fixed inset-0 z-40 flex md:hidden transition-opacity duration-300 ${
+          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div
+          className="flex-1 bg-black transition-opacity duration-300"
+          style={{ opacity: sidebarOpen ? 0.5 : 0 }}
+          onClick={() => setSidebarOpen(false)}
+        />
 
-      {/* Main area */}
+        <div
+          className={`w-64 h-full bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
+            sidebarOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <SideBar />
+        </div>
+      </div>
+
       <div className="flex flex-col flex-1 md:ml-64">
         <div className="fixed top-0 left-0 right-0 md:left-64 z-20">
-          <Header title="Dashboard Overview" onMenuClick={() => setSidebarOpen(true)} />
+          <Header onMenuClick={() => setSidebarOpen(true)} />
         </div>
         <main className="mt-20 px-1 py-2 sm:px-4 sm:py-6 overflow-y-auto h-[calc(100vh-5rem)]">
           <DashboardMainContent />

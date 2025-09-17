@@ -8,6 +8,7 @@ import {
 import LoginCompt from "../components/LoginCompt";
 import { useAuth } from "../hooks/useAuth";
 import { useTheme } from "../hooks/useTheme";
+import logo from "../assets/logo.svg";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -66,12 +67,12 @@ export default function Login() {
       }`}
     >
       {/* Mobile: centered logo */}
-      <div className="block lg:hidden w-full flex justify-center pt-4">
-        <img src={AppLogo} alt="App Logo" className="h-12 w-12" />
+      <div className="lg:hidden w-full flex justify-center pt-4">
+        <img src={logo} alt="App Logo" className="h-12 w-12" />
       </div>
       {/* Desktop: top-left logo */}
       <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
-        <img src={AppLogo} alt="App Logo" className="h-12 w-12" />
+        <img src={logo} alt="App Logo" className="h-12 w-12" />
       </div>
 
       <div className="hidden lg:flex lg:w-1/2 h-screen items-center justify-center">
@@ -88,6 +89,7 @@ export default function Login() {
           onChange={handleChange}
           onSubmit={handleLogin}
           onGoogleLogin={handleGoogleLogin}
+          loading={loading}
         />
       </div>
     </div>

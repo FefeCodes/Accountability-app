@@ -1,37 +1,57 @@
 import { Link } from "react-router-dom";
-import defaultUserIcon from "../../../assets/ui_user.svg"; // adjust path
+import { useState } from "react";
+import defaultUserIcon from "../../../assets/ui_user.svg";
+import ContactModal from "../../ContactModal";
 
-export default function PartnersCardConnected({ user = {} }) {
+export default function PartnersCardConnected({ partner = {}, user = {} }) {
+  const [showContactModal, setShowContactModal] = useState(false);
+
+  // Use partner data if available, otherwise fall back to user data
+  const data = partner.id ? partner : user;
+
+  const handleMessageClick = () => {
+    setShowContactModal(true);
+  };
+
   return (
-    <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition">
-      <div className="flex items-center gap-3">
-        {/* Profile Image */}
-        <div className="w-12 h-12 rounded-full overflow-hidden border bg-gray-100 flex items-center justify-center">
-          <img
-            src={user.image || defaultUserIcon}
-            alt={user.name || "User"}
-            className="w-full h-full object-cover"
-          />
+    <>
+      <div className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition">
+        <div className="flex items-center gap-3">
+          {/* Profile Image */}
+          <div className="w-12 h-12 rounded-full overflow-hidden border bg-gray-100 flex items-center justify-center">
+            <img
+              src={data.profilePicture || data.image || defaultUserIcon}
+              alt={data.name || "User"}
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div>
+            <Link
+              to={`/connected-profile/${data.id}`}
+              className="text-sm font-semibold text-gray-800 hover:text-blue-600 transition"
+            >
+              {data.name}
+            </Link>
+            <p className="text-xs text-gray-500">Already connected partner</p>
+          </div>
         </div>
 
-        {/* User Info */}
         <div>
-          <Link
-            to="/connected-profile"
-            className="text-sm font-semibold text-gray-800 hover:text-blue-600 transition"
+          <button
+            onClick={handleMessageClick}
+            className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition"
           >
-            {user.name || "Jane Smith"}
-          </Link>
-          <p className="text-xs text-gray-500">Already connected partner</p>
+            Message
+          </button>
         </div>
       </div>
 
-      {/* Button */}
-      <div>
-        <button className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition">
-          Message
-        </button>
-      </div>
-    </div>
+      <ContactModal
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+        partner={data}
+      />
+    </>
   );
 }
