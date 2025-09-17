@@ -65,6 +65,15 @@ export default function Login() {
           : "bg-gradient-to-br from-blue-50 to-indigo-100"
       }`}
     >
+      {/* Mobile: centered logo */}
+      <div className="block lg:hidden w-full flex justify-center pt-4">
+        <img src={AppLogo} alt="App Logo" className="h-12 w-12" />
+      </div>
+      {/* Desktop: top-left logo */}
+      <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
+        <img src={AppLogo} alt="App Logo" className="h-12 w-12" />
+      </div>
+
       <div className="hidden lg:flex lg:w-1/2 h-screen items-center justify-center">
         <img
           className="w-full h-full"

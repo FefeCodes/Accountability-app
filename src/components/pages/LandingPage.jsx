@@ -22,7 +22,7 @@ const LandingPage = () => {
       }`}
     >
       <header
-        className={`px-10 py-6 transition-colors duration-300 ${
+        className={`px-4 md:px-10 py-6 transition-colors duration-300 ${
           isDarkMode ? "bg-gray-800" : "bg-white"
         } shadow-sm`}
       >
@@ -56,44 +56,38 @@ const LandingPage = () => {
 
           <div className="md:hidden flex items-center space-x-4">
             <ThemeToggle />
-            <button
-              onClick={handleGetStarted}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-            >
-              Get Started
-            </button>
           </div>
         </div>
       </header>
 
-      <section className="relative px-4 py-10 md:py-20">
+      <section className="relative px-4 md:px-10 py-10 md:py-20">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-80 w-60 h-60 bg-green-300 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob"></div>
           <div className="absolute top-40 right-10 w-60 h-60 bg-blue-300 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob animation-delay-2000"></div>
           <div className="absolute -bottom-8 left-20 w-60 h-60 bg-purple-300 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob animation-delay-4000"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center max-w-4xl mx-auto gap-y-1 flex flex-col items-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
+        <div className="w-full relative z-10">
+          <div className="text-center w-full gap-y-1 flex flex-col items-center">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
               Find Your Accountability Partner
             </h1>
-            <h2 className="text-2xl md:text-4xl font-bold mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8">
               Achieve More, Together
             </h2>
             <p
-              className={` w-4/5 text-lg md:text-xl mb-8 leading-relaxed ${
+              className={`w-4/5 text-base md:text-lg mb-8 leading-relaxed ${
                 isDarkMode ? "text-gray-300" : "text-gray-600"
               }`}
             >
-              Stay consistent, crush your goals, and never feel stuck again. Our
+              Stay consistent, crush your goals, and never feel stuck again. <br/>Our
               accountability app connects you with like-minded partners who help
               you stay on track; whether you're learning tech, building
               projects, or improving habits.
             </p>
             <button
               onClick={handleGetStarted}
-              className="inline-flex items-center px-10 py-6 bg-blue-600 text-white text-xl font-semibold rounded-full hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+              className="inline-flex items-center px-6 md:px-10 md:py-6 py-4 bg-blue-600 text-white md:text-base text-xl md:font-medium font-semibold rounded-full hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
             >
               Get Started for Free
               <svg
@@ -114,7 +108,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="px-10 py-8">
+      <section className="px-4 md:px-10 py-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {[1, 2, 3, 4].map((i) => (
@@ -137,7 +131,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="px-10 py-6">
+      <section className="px-4 md:px-10 py-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             <div
@@ -252,9 +246,9 @@ const LandingPage = () => {
       </section>
 
       
-      <footer className="px-4 py-8 text-center">
+      <footer className="px-4 md:px-10 py-8 text-center">
         <p
-          className={`text-lg font-semibold ${
+          className={`text-lg font-medium ${
             isDarkMode ? "text-gray-400" : "text-gray-600"
           }`}
         >

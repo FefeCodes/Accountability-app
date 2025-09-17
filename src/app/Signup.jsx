@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // add Link
+import { useNavigate, Link } from "react-router-dom";
 import SignupCompt from "../components/SignupCompt";
 import accountabilityHero from "../assets/accountability-hero.svg";
-import logo from "../assets/logo.svg"; // import your logo
+import logo from "../assets/logo.svg";
 import { signUpWithEmail, signInWithGoogle } from "../config/firebase";
 import { useAuth } from "../hooks/useAuth";
 import { useTheme } from "../hooks/useTheme";
@@ -68,8 +68,14 @@ export default function Signup() {
           : "bg-gradient-to-br from-blue-50 to-indigo-100"
       }`}
     >
-      {/* Logo Position */}
-      <div className="w-full flex justify-center lg:fixed lg:top-4 lg:left-6 lg:justify-start pt-4 mb-2 lg:mb-0 z-50">
+      {/* Mobile: centered logo */}
+      <div className="lg:hidden w-full flex justify-center pt-4 z-50">
+        <Link to="/">
+          <img src={logo} alt="App Logo" className="h-12 w-12" />
+        </Link>
+      </div>
+      {/* Desktop: top-left logo */}
+      <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
         <Link to="/">
           <img src={logo} alt="App Logo" className="h-12 w-12" />
         </Link>

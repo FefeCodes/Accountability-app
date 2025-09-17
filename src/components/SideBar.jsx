@@ -1,54 +1,11 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo.svg";
 
 export default function SideBar() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <div>
-      {/* Mobile Menu Button */}
-      <button
-        className="md:hidden p-3 m-2 rounded-md bg-gray-200 hover:bg-gray-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-        onClick={() => setIsOpen(true)}
-        aria-label="Open navigation menu"
-      >
-        ☰
-      </button>
-
-      {/* Desktop Sidebar */}
-      <nav
-        className="hidden md:flex h-screen w-64 bg-white shadow-md flex-col px-4 pt-8 pb-6"
-        aria-label="Primary"
-      >
-        <SidebarContent />
-      </nav>
-
-      {/* Mobile Sidebar */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex">
-          <div
-            className="flex-1 bg-black bg-opacity-40"
-            onClick={() => setIsOpen(false)}
-          ></div>
-
-          <nav
-            className="w-64 bg-white h-full shadow-lg p-4 flex flex-col"
-            aria-label="Primary"
-          >
-            <button
-              className="self-end mb-4 p-2 rounded hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-              onClick={() => setIsOpen(false)}
-              aria-label="Close navigation menu"
-            >
-              ✕
-            </button>
-
-            <SidebarContent />
-          </nav>
-        </div>
-      )}
-    </div>
+    <nav className="h-full w-64 bg-white shadow-md flex flex-col px-4 pt-8 pb-6" aria-label="Primary">
+      <SidebarContent />
+    </nav>
   );
 }
 

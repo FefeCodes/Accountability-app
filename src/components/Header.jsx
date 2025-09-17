@@ -1,14 +1,24 @@
 import { useAuth } from "../hooks/useAuth";
+import { MenuIcon } from "../assets/svgIcons";
 
-export default function Header({ title = "Dashboard Overview" }) {
+export default function Header({ title = "Dashboard Overview", onMenuClick }) {
   const { userProfile } = useAuth();
-  const placeholder = "/assets/ui_user.svg"; // keep a default avatar
+  const placeholder = "/assets/ui_user.svg";
 
   return (
     <header className="w-full h-20 px-4 md:px-6 flex items-center justify-between bg-white">
-      {/* Title */}
-      <div className="flex-shrink-0">
-        <p className="text-base md:text-3xl font-semibold text-gray-800">
+      {/* Left: Mobile menu button + Title */}
+      <div className="flex items-center gap-2 flex-shrink-0">
+        {onMenuClick && (
+          <button
+            onClick={onMenuClick}
+            className="md:hidden mr-1 p-2 rounded-md hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            aria-label="Open navigation menu"
+          >
+            <MenuIcon className="h-6 w-6 text-gray-700" />
+          </button>
+        )}
+        <p className="text-xl md:text-3xl font-semibold text-gray-800">
           {title}
         </p>
       </div>

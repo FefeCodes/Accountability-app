@@ -85,12 +85,19 @@ const toggleGoal = (goal) => {
   };
 
   return (
-    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-8 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100" role="main" aria-labelledby="onboarding-goal-heading">
+    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-6 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100" role="main" aria-labelledby="onboarding-goal-heading">
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
 
-      <div className="fixed top-30 left-3/4 -translate-x-3/4 lg:left-20 lg:translate-x-0 z-50">
+      {/* Mobile: centered logo */}
+      <div className="lg:hidden w-full flex justify-center pt-4">
         <Link to="/">
-          <img src={logo} alt="App Logo" className="h-10 w-auto" />
+          <img src={logo} alt="App Logo" className="h-10 w-10" />
+        </Link>
+      </div>
+      {/* Desktop: top-left logo */}
+      <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
+        <Link to="/">
+          <img src={logo} alt="App Logo" className="h-10 w-10" />
         </Link>
       </div>
 
@@ -98,7 +105,7 @@ const toggleGoal = (goal) => {
         Your Goals
       </h2>
 
-      <section className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-10 lg:gap-y-8" aria-labelledby="goal-question">
+      <section className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-7 lg:gap-y-8" aria-labelledby="goal-question">
         <h2 id="goal-question" className="text-xl font-semibold">
           What do you want to stay accountable for?
         </h2>
@@ -120,7 +127,7 @@ const toggleGoal = (goal) => {
         </div>
 
         {selectedGoals.includes("Custom") && (
-          <div className="w-full mt-4">
+          <div className="w-full">
             <input
               type="text"
               placeholder="Enter your custom goal..."
