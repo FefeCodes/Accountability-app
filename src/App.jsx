@@ -19,6 +19,7 @@ import ConnectProfile from "./components/pages/profile/ConnectProfile.jsx";
 import ConnectedProfile from "./components/pages/profile/ConnectedProfile.jsx";
 import SeeMore from "./components/pages/profile/SeeMore.jsx";
 import ForgotPassword from "./components/ForgotPasword.jsx";
+import UserProfile from "./components/pages/UserProfile.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -92,6 +93,14 @@ function App() {
       element: (
         <ProtectedRoute requireOnboarding={true}>
           <SeeMore />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/profile",
+      element: (
+        <ProtectedRoute requireOnboarding={true}>
+          <UserProfile />
         </ProtectedRoute>
       ),
     },

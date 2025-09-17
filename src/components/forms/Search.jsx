@@ -1,11 +1,23 @@
 import { useState } from "react";
-import InputField from "./InputField.jsx"; 
+import InputField from "./InputField.jsx";
 
-export default function Search() {
-  const [query, setQuery] = useState("");
+export default function Search({
+  value = "",
+  onChange,
+  placeholder = "Search...",
+}) {
+  const [query, setQuery] = useState(value);
 
   const handleSearch = () => {
     console.log("Searching for:", query);
+  };
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setQuery(newValue);
+    if (onChange) {
+      onChange(newValue);
+    }
   };
 
   const searchIcon = (
@@ -29,12 +41,12 @@ export default function Search() {
     <InputField
       type="text"
       name="search"
-      placeholder="Search..."
+      placeholder={placeholder}
       value={query}
-      onChange={(e) => setQuery(e.target.value)}
+      onChange={handleChange}
       icon={searchIcon}
       onIconClick={handleSearch}
-      rounded="full" 
+      rounded="full"
       className="mb-0"
     />
   );

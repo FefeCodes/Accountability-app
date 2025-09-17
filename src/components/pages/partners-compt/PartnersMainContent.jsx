@@ -19,6 +19,7 @@ export default function PartnersMainContent() {
     receivedRequests: [],
   });
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const tabs = ["All", "Connect", "Connected"];
 
@@ -85,11 +86,36 @@ export default function PartnersMainContent() {
     (user) => getUserConnectionStatus(user.uid) === "pending"
   );
 
+  // Filter users based on search query
+  const filterUsersBySearch = (users) => {
+    if (!searchQuery.trim()) return users;
+
+    const query = searchQuery.toLowerCase();
+    return users.filter((user) => {
+      const name = (user.fullName || user.name || "").toLowerCase();
+      const bio = (user.bio || "").toLowerCase();
+      const goals = (user.goals || []).join(" ").toLowerCase();
+      const interests = (user.interests || []).join(" ").toLowerCase();
+
+      return (
+        name.includes(query) ||
+        bio.includes(query) ||
+        goals.includes(query) ||
+        interests.includes(query)
+      );
+    });
+  };
+
+  // Apply search filter to each category
+  const filteredConnectedUsers = filterUsersBySearch(connectedUsers);
+  const filteredAvailableUsers = filterUsersBySearch(availableUsers);
+  const filteredPendingUsers = filterUsersBySearch(pendingUsers);
+
   return (
-    <div className="w-full px-6 sm:px-6 py-6 h-[calc(100vh-5rem)]">
+    <div className="w-full px-6 sm:px-6 py-6 h-[calc(100vh-5rem)] flex flex-col">
       {/* Fixed Tabs + Search */}
       <div
-        className="sticky top-6 z-10 flex flex-row items-center gap-3 sm:gap-6 px-3 sm:px-5 py-3 bg-white rounded-t-xl shadow-sm overflow-x-auto"
+        className="flex flex-row items-center gap-3 sm:gap-6 px-3 sm:px-5 py-3 bg-white rounded-t-xl shadow-sm overflow-x-auto flex-shrink-0"
         role="tablist"
         aria-label="Partners tabs"
       >
@@ -111,14 +137,18 @@ export default function PartnersMainContent() {
         ))}
 
         <div className="ml-6 w-40 sm:w-1/2">
-          <Search />
+          <Search
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Search partners..."
+          />
         </div>
       </div>
 
       {/* Scrollable Content */}
-      <div className="mt-4 px-3 sm:px-5 py-6 bg-white shadow-sm rounded-b-xl flex-1 flex flex-col">
+      <div className="mt-4 px-3 sm:px-5 py-6 bg-white shadow-sm rounded-b-xl flex-1 flex flex-col overflow-hidden">
         {loading ? (
-          <div className="px-3 sm:px-5 py-6 flex-1 overflow-y-auto">
+          <div className="px-3 sm:px-5 py-6 overflow-y-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {[...Array(8)].map((_, i) => (
                 <div key={i} className="animate-pulse">
@@ -127,8 +157,10 @@ export default function PartnersMainContent() {
               ))}
             </div>
           </div>
-        ) : allUsers.length === 0 ? (
-          <div className="px-3 sm:px-5 py-6 flex-1 overflow-y-auto flex items-center justify-center">
+        ) : filteredConnectedUsers.length === 0 &&
+          filteredAvailableUsers.length === 0 &&
+          filteredPendingUsers.length === 0 ? (
+          <div className="px-3 sm:px-5 py-6 overflow-y-auto flex items-center justify-center min-h-[400px]">
             <div className="text-center">
               <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                 <svg
@@ -146,10 +178,12 @@ export default function PartnersMainContent() {
                 </svg>
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">
-                No users found
+                {searchQuery ? "No results found" : "No users found"}
               </h3>
               <p className="text-gray-500 mb-4">
-                {activeTab === "All"
+                {searchQuery
+                  ? `No partners match "${searchQuery}". Try a different search term.`
+                  : activeTab === "All"
                   ? "No other users are available at the moment."
                   : activeTab === "Connect"
                   ? "No available users to connect with."
@@ -162,7 +196,7 @@ export default function PartnersMainContent() {
           </div>
         ) : (
           <div
-            className={`px-3 sm:px-5 py-6 flex-1 overflow-y-auto 
+            className={`px-3 sm:px-5 py-6 overflow-y-auto 
               ${
                 activeTab === "Connected"
                   ? "flex flex-col w-full gap-4 sm:gap-6"
@@ -173,15 +207,15 @@ export default function PartnersMainContent() {
               <>
                 {(() => {
                   const mixedUsers = [
-                    ...availableUsers.map((user) => ({
+                    ...filteredAvailableUsers.map((user) => ({
                       type: "partner",
                       data: { ...user, connectionStatus: "available" },
                     })),
-                    ...connectedUsers.map((user) => ({
+                    ...filteredConnectedUsers.map((user) => ({
                       type: "init",
                       data: { ...user, connectionStatus: "connected" },
                     })),
-                    ...pendingUsers.map((user) => ({
+                    ...filteredPendingUsers.map((user) => ({
                       type: "partner",
                       data: { ...user, connectionStatus: "pending" },
                     })),
@@ -208,7 +242,7 @@ export default function PartnersMainContent() {
             )}
 
             {activeTab === "Connect" &&
-              availableUsers.map((user) => (
+              filteredAvailableUsers.map((user) => (
                 <PartnersCard
                   key={user.uid}
                   partner={{ ...user, connectionStatus: "available" }}
@@ -216,7 +250,7 @@ export default function PartnersMainContent() {
               ))}
 
             {activeTab === "Connected" &&
-              connectedUsers.map((user) => (
+              filteredConnectedUsers.map((user) => (
                 <PartnersCardConnected
                   key={user.uid}
                   partner={{ ...user, connectionStatus: "connected" }}

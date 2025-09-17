@@ -2,19 +2,87 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PartnersCard from "../partners-compt/PartnersCard";
 import PartnersInitialConnected from "../partners-compt/PartnersInitialConnected";
+import PartnersCardConnected from "../partners-compt/PartnersCardConnected";
 import seeMoreIcon from "../../../assets/arrowright.svg";
-import { getPartners } from "../../../utils/firebaseData";
+import {
+  getAllUsersAsPartners,
+  getUserPartnerRelationships,
+} from "../../../utils/firebaseData";
+import { useAuth } from "../../../hooks/useAuth";
 
 export default function SecondContent() {
+  const { currentUser } = useAuth();
   const [partners, setPartners] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPartners = async () => {
+      if (!currentUser) return;
+
       try {
         setLoading(true);
-        const partnersData = await getPartners();
-        setPartners(partnersData.slice(0, 4));
+
+        // Get all users and relationships (same as partners screen)
+        const [allUsers, userRelationships] = await Promise.all([
+          getAllUsersAsPartners(currentUser.uid),
+          getUserPartnerRelationships(currentUser.uid),
+        ]);
+
+        // Get connection status for each user
+        const getUserConnectionStatus = (userId) => {
+          const isConnected = userRelationships.connectedPartners.some(
+            (partner) =>
+              (partner.fromUserId === currentUser.uid &&
+                partner.toUserId === userId) ||
+              (partner.toUserId === currentUser.uid &&
+                partner.fromUserId === userId)
+          );
+
+          const hasSentRequest = userRelationships.sentRequests.some(
+            (request) =>
+              request.toUserId === userId && request.status === "pending"
+          );
+
+          const hasReceivedRequest = userRelationships.receivedRequests.some(
+            (request) =>
+              request.fromUserId === userId && request.status === "pending"
+          );
+
+          if (isConnected) return "connected";
+          if (hasSentRequest) return "pending";
+          if (hasReceivedRequest) return "received";
+          return "available";
+        };
+
+        // Mix different types of users and take first 4
+        const connectedUsers = allUsers.filter(
+          (user) => getUserConnectionStatus(user.uid) === "connected"
+        );
+        const availableUsers = allUsers.filter(
+          (user) => getUserConnectionStatus(user.uid) === "available"
+        );
+        const pendingUsers = allUsers.filter(
+          (user) => getUserConnectionStatus(user.uid) === "pending"
+        );
+
+        const mixedUsers = [
+          ...availableUsers.map((user) => ({
+            type: "partner",
+            data: { ...user, connectionStatus: "available" },
+          })),
+          ...connectedUsers.map((user) => ({
+            type: "connected",
+            data: { ...user, connectionStatus: "connected" },
+          })),
+          ...pendingUsers.map((user) => ({
+            type: "partner",
+            data: { ...user, connectionStatus: "pending" },
+          })),
+        ];
+
+        // Shuffle and take first 4
+        mixedUsers.sort(() => Math.random() - 0.5);
+        setPartners(mixedUsers.slice(0, 4));
       } catch (error) {
         console.error("Error fetching partners:", error);
       } finally {
@@ -23,7 +91,7 @@ export default function SecondContent() {
     };
 
     fetchPartners();
-  }, []);
+  }, [currentUser]);
 
   if (loading) {
     return (
@@ -109,13 +177,21 @@ export default function SecondContent() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-          {partners.map((partner) =>
-            partner.isConnected ? (
-              <PartnersInitialConnected key={partner.id} partner={partner} />
-            ) : (
-              <PartnersCard key={partner.id} partner={partner} />
-            )
-          )}
+          {partners.map((item) => {
+            if (item.type === "connected") {
+              return (
+                <PartnersCardConnected
+                  key={`c-${item.data.uid}`}
+                  partner={item.data}
+                />
+              );
+            } else if (item.type === "partner") {
+              return (
+                <PartnersCard key={`p-${item.data.uid}`} partner={item.data} />
+              );
+            }
+            return null;
+          })}
         </div>
       )}
     </div>

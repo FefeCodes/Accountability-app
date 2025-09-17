@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { Link } from "react-router-dom";
 import {
   getUserConnectionRequests,
   acceptUserConnectionRequest,
 } from "../utils/firebaseData";
+import { getUserFromFirestoreSilent } from "../config/firebase";
 
 export default function ConnectionRequests() {
   const { currentUser } = useAuth();
@@ -19,7 +21,29 @@ export default function ConnectionRequests() {
         const connectionRequests = await getUserConnectionRequests(
           currentUser.uid
         );
-        setRequests(connectionRequests);
+
+        // Fetch user data for each request
+        const requestsWithUserData = await Promise.all(
+          connectionRequests.map(async (request) => {
+            try {
+              const userData = await getUserFromFirestoreSilent(
+                request.fromUserId
+              );
+              return {
+                ...request,
+                userData: userData,
+              };
+            } catch (error) {
+              console.error("Error fetching user data for request:", error);
+              return {
+                ...request,
+                userData: null,
+              };
+            }
+          })
+        );
+
+        setRequests(requestsWithUserData);
       } catch (error) {
         console.error("Error fetching connection requests:", error);
       } finally {
@@ -94,28 +118,30 @@ export default function ConnectionRequests() {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-200">
+                <img
+                  src={
+                    request.userData?.profilePicture || "/default-avatar.png"
+                  }
+                  alt={request.userData?.fullName || "User"}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
-                <p className="font-medium text-gray-900">
-                  Connection request from partner
-                </p>
+                <Link
+                  to={`/connect-profile/${request.fromUserId}`}
+                  className="font-medium text-blue-600 hover:text-blue-800 transition-colors"
+                >
+                  {request.userData?.fullName || "Unknown User"}
+                </Link>
                 <p className="text-sm text-gray-500">
                   {new Date(request.createdAt).toLocaleDateString()}
                 </p>
+                {request.userData?.bio && (
+                  <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                    {request.userData.bio}
+                  </p>
+                )}
               </div>
             </div>
 
