@@ -1,13 +1,26 @@
 import { useState } from "react";
-import { Link } from "react-router-dom"; // import Link
+import { Link } from "react-router-dom";
 import defaultUserIcon from "../../../assets/ui_user.svg";
+import ContactModal from "../../ContactModal";
 
-export default function PartnersInitialConnected({ user = {}, onButtonClick = () => {} }) {
+export default function PartnersInitialConnected({
+  partner = {},
+  user = {},
+  onButtonClick = () => {},
+}) {
   const [loading, setLoading] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
 
-  const handleClick = async () => {
+  // Use partner data if available, otherwise fall back to user data
+  const data = partner.id ? partner : user;
+
+  const handleMessageClick = () => {
+    setShowContactModal(true);
+  };
+
+  const handleClick = () => {
     setLoading(true);
-    await onButtonClick(user, setLoading);
+    onButtonClick(data, setLoading);
   };
 
   const getButton = () => {
@@ -22,7 +35,7 @@ export default function PartnersInitialConnected({ user = {}, onButtonClick = ()
       );
     }
 
-    switch (user.connectionStatus) {
+    switch (data.connectionStatus) {
       case "connected":
         return (
           <button
@@ -46,10 +59,10 @@ export default function PartnersInitialConnected({ user = {}, onButtonClick = ()
       default:
         return (
           <button
-            onClick={handleClick}
+            onClick={handleMessageClick}
             className="w-full px-4 py-2 text-base font-medium text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-700 hover:text-white transition"
           >
-            Connected
+            Message
           </button>
         );
     }
@@ -61,8 +74,8 @@ export default function PartnersInitialConnected({ user = {}, onButtonClick = ()
         {/* Profile Image with fallback */}
         <div className="w-16 h-16 rounded-full overflow-hidden border bg-gray-100 flex items-center justify-center">
           <img
-            src={user.image || defaultUserIcon}
-            alt={user.name || "User"}
+            src={data.profilePicture || data.image || defaultUserIcon}
+            alt={data.name || "User"}
             className="w-full h-full object-cover"
           />
         </div>
@@ -71,20 +84,29 @@ export default function PartnersInitialConnected({ user = {}, onButtonClick = ()
         <div className="flex flex-col items-center justify-center text-center">
           {/* Username clickable */}
           <Link
-            to="/connected-profile"
+            to={`/connected-profile/${data.id}`}
             className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition pb-3"
           >
-            {user.name || "John Doe"}
+            {data.name || "John Doe"}
           </Link>
 
           <p className="text-base text-gray-500">
-            {user.goal || "Learn React and work on a project"}
+            {data.goals?.[0] ||
+              data.goal ||
+              "Learn React and work on a project"}
           </p>
         </div>
       </div>
 
       {/* Button */}
       <div className="mt-4 w-full">{getButton()}</div>
+
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+        partner={data}
+      />
     </div>
   );
 }

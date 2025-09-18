@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import InputField from "../forms/InputField.jsx";
 import ProgressBar from "../atoms/ProgressBar.jsx";
-import logo from "../../assets/logo.svg"
+import logo from "../../assets/logo.svg";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { updateOnboardingProgress } from "../../config/firebase";
 import { toast } from "react-toastify";
+import {
+  validateImageSize,
+  validateDataUrlSize,
+} from "../../utils/errorHandler";
 
 export default function Onboarding() {
   const totalSteps = 5;
@@ -24,6 +28,7 @@ export default function Onboarding() {
   const [loading, setLoading] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
   const [stream, setStream] = useState(null);
+  const [imageError, setImageError] = useState(null);
 
   useEffect(() => {
     if (userProfile) {
@@ -35,16 +40,14 @@ export default function Onboarding() {
     }
   }, [userProfile]);
 
-
-useEffect(() => {
-  if (videoRef.current && stream) {
-    videoRef.current.srcObject = stream;
-    videoRef.current.play().catch((err) =>
-      console.error("Error playing video:", err)
-    );
-  }
-}, [stream]);
-
+  useEffect(() => {
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+      videoRef.current
+        .play()
+        .catch((err) => console.error("Error playing video:", err));
+    }
+  }, [stream]);
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -53,6 +56,17 @@ useEffect(() => {
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (!validateImageSize(file, 0.75)) {
+        console.log("Image size is too large");
+        setImageError(
+          "Image size must be less than 0.5MB. Please choose a smaller image."
+        );
+        e.target.value = "";
+        return;
+      }
+
+      setImageError(null);
+
       const reader = new FileReader();
       reader.onload = (e) => {
         setFormData((prev) => ({
@@ -65,18 +79,20 @@ useEffect(() => {
   };
 
   const startCamera = async () => {
-  try {
-    const mediaStream = await navigator.mediaDevices.getUserMedia({
-      video: { width: { ideal: 640 }, height: { ideal: 480 } },
-    });
-    setStream(mediaStream); // set stream
-    setShowCamera(true);
-  } catch (error) {
-    console.error("Error accessing camera:", error);
-    toast.error("Unable to access camera. Please try uploading a file instead.");
-  }
-};
-
+    try {
+      setImageError(null);
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { width: { ideal: 640 }, height: { ideal: 480 } },
+      });
+      setStream(mediaStream);
+      setShowCamera(true);
+    } catch (error) {
+      console.error("Error accessing camera:", error);
+      toast.error(
+        "Unable to access camera. Please try uploading a file instead."
+      );
+    }
+  };
 
   const stopCamera = () => {
     if (stream) {
@@ -87,27 +103,39 @@ useEffect(() => {
   };
 
   const capturePhoto = () => {
-  if (videoRef.current && canvasRef.current) {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
 
-    if (video.videoWidth === 0 || video.videoHeight === 0) {
-      toast.error("Camera not ready yet. Please try again.");
-      return;
+      if (video.videoWidth === 0 || video.videoHeight === 0) {
+        toast.error("Camera not ready yet. Please try again.");
+        return;
+      }
+
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const imageData = canvas.toDataURL("image/jpeg");
+
+      // Check data URL size using utility function (Firebase 1MB limit)
+      if (!validateDataUrlSize(imageData)) {
+        console.log("Image data size is too large");
+        setImageError(
+          "Captured image is too large (over 0.75MB). Please try again with better lighting or a smaller resolution."
+        );
+        stopCamera();
+        return;
+      }
+
+      // Clear any previous errors
+      setImageError(null);
+      setFormData((prev) => ({ ...prev, profilePicture: imageData }));
+
+      stopCamera();
     }
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    const imageData = canvas.toDataURL("image/jpeg");
-    setFormData((prev) => ({ ...prev, profilePicture: imageData }));
-
-    stopCamera();
-  }
-};
-
+  };
 
   const handleNext = async () => {
     if (!formData.username.trim()) {
@@ -141,7 +169,11 @@ useEffect(() => {
   };
 
   return (
-    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-6 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100" role="main" aria-labelledby="onboarding-basic-info-heading">
+    <main
+      className="w-full min-h-screen flex flex-col justify-start items-center gap-y-6 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100"
+      role="main"
+      aria-labelledby="onboarding-basic-info-heading"
+    >
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
 
       {/* Mobile: centered logo */}
@@ -157,13 +189,20 @@ useEffect(() => {
         </Link>
       </div>
 
-
-      <h2 id="onboarding-basic-info-heading" className="font-bold text-2xl lg:text-3xl text-gray-900">
+      <h2
+        id="onboarding-basic-info-heading"
+        className="font-bold text-2xl lg:text-3xl text-gray-900"
+      >
         Basic Info
       </h2>
 
-      <section className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-10 lg:gap-y-8" aria-labelledby="basic-info-form">
-        <h2 id="basic-info-form" className="sr-only">Basic info form</h2>
+      <section
+        className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-10 lg:gap-y-8"
+        aria-labelledby="basic-info-form"
+      >
+        <h2 id="basic-info-form" className="sr-only">
+          Basic info form
+        </h2>
         <div className="w-full flex flex-col gap-y-6 sm:gap-y-4">
           <InputField
             label="Username or Nickname"
@@ -192,9 +231,13 @@ useEffect(() => {
                       : "Profile picture uploaded"}
                   </p>
                   <button
-                    onClick={() =>
-                      setFormData((prev) => ({ ...prev, profilePicture: null }))
-                    }
+                    onClick={() => {
+                      setFormData((prev) => ({
+                        ...prev,
+                        profilePicture: null,
+                      }));
+                      setImageError(null);
+                    }}
                     className="text-sm text-red-600 hover:text-red-800 transition-colors"
                   >
                     Remove
@@ -225,11 +268,31 @@ useEffect(() => {
               )}
             </div>
           </div>
+
+          {/* Image Error Warning */}
+          {imageError && (
+            <div className="w-full p-4 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-center gap-2">
+                <svg
+                  className="w-5 h-5 text-red-500 flex-shrink-0"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <p className="text-sm text-red-700">{imageError}</p>
+              </div>
+            </div>
+          )}
         </div>
         <div className="w-full flex justify-end items-center">
           <button
             onClick={handleNext}
-            disabled={loading}
+            disabled={loading || imageError}
             className=" w-full sm:w-fit px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {loading ? "Saving..." : "Next"}
@@ -239,9 +302,16 @@ useEffect(() => {
 
       {/* Camera Modal */}
       {showCamera && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" role="dialog" aria-modal="true" aria-labelledby="camera-modal-title">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="camera-modal-title"
+        >
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h2 id="camera-modal-title" className="text-lg font-semibold mb-4">Take a Picture</h2>
+            <h2 id="camera-modal-title" className="text-lg font-semibold mb-4">
+              Take a Picture
+            </h2>
             <video
               ref={videoRef}
               autoPlay

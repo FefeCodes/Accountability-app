@@ -29,7 +29,7 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-full flex items-center justify-center">
-              <img className="text-white font-bold text-sm" src={logo} alt=""/>
+              <img className="text-white font-bold text-sm" src={logo} alt="" />
             </div>
             <span className="text-xl font-bold">CommitBuddy</span>
           </div>
@@ -69,41 +69,60 @@ const LandingPage = () => {
 
         <div className="w-full relative z-10">
           <div className="text-center w-full gap-y-1 flex flex-col items-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-7xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
               Find Your Accountability Partner
             </h1>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">
+            <h2 className="text-xl md:text-4xl font-bold mb-4 md:mb-8">
               Achieve More, Together
             </h2>
             <p
-              className={`w-4/5 text-base md:text-lg mb-8 leading-relaxed ${
+              className={`w-4/5 text-sm md:text-lg mb-6 md:mb-8 leading-relaxed ${
                 isDarkMode ? "text-gray-300" : "text-gray-600"
               }`}
             >
-              Stay consistent, crush your goals, and never feel stuck again. <br/>Our
-              accountability app connects you with like-minded partners who help
-              you stay on track; whether you're learning tech, building
-              projects, or improving habits.
+              <span className="hidden md:inline">
+                Stay consistent, crush your goals, and never feel stuck again.{" "}
+                <br />
+                Our accountability app connects you with like-minded partners
+                who help you stay on track; whether you're learning tech,
+                building projects, or improving habits.
+              </span>
+              <span className="md:hidden">
+                Connect with partners who help you stay on track and achieve
+                your goals.
+              </span>
             </p>
-            <button
-              onClick={handleGetStarted}
-              className="inline-flex items-center px-6 md:px-10 md:py-6 py-4 bg-blue-600 text-white md:text-base text-xl md:font-medium font-semibold rounded-full hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
-            >
-              Get Started for Free
-              <svg
-                className="ml-2 w-8 h-8"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-center">
+              <button
+                onClick={handleGetStarted}
+                className="cursor-pointer inline-flex items-center px-6 md:px-8 py-3 md:py-3 bg-blue-600 text-white text-sm md:text-base font-medium rounded-full hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </button>
+                Get Started for Free
+                <svg
+                  className="ml-2 w-4 h-4 md:w-6 md:h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </button>
+              <button
+                onClick={handleSignIn}
+                className={`cursor-pointer w-full sm:w-auto text-center px-6 md:px-8 py-3 md:py-3 border-2 rounded-full text-sm md:text-base font-medium transition-all duration-200 hover:scale-105 ${
+                  isDarkMode
+                    ? "border-gray-600 text-gray-300 hover:border-gray-500 hover:text-white"
+                    : "border-gray-300 text-gray-700 hover:border-gray-400 hover:text-gray-900"
+                }`}
+              >
+                Sign In
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -245,7 +264,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      
       <footer className="px-4 md:px-10 py-8 text-center">
         <p
           className={`text-lg font-medium ${

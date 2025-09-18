@@ -15,11 +15,11 @@ import ResetPassword from "./components/ResetPassword.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Partners from "./components/pages/Partners.jsx";
-import LogOut from "./components/pages/LogOut.jsx";
 import ConnectProfile from "./components/pages/profile/ConnectProfile.jsx";
 import ConnectedProfile from "./components/pages/profile/ConnectedProfile.jsx";
 import SeeMore from "./components/pages/profile/SeeMore.jsx";
 import ForgotPassword from "./components/ForgotPasword.jsx";
+import UserProfile from "./components/pages/UserProfile.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -27,25 +27,33 @@ function App() {
     {
       path: "/login",
       element: (
+        <ProtectedRoute requireAuth={false}>
           <Login />
+        </ProtectedRoute>
       ),
     },
     {
       path: "/signup",
       element: (
+        <ProtectedRoute requireAuth={false}>
           <Signup />
+        </ProtectedRoute>
       ),
     },
     {
       path: "/forgot-password",
       element: (
+        <ProtectedRoute requireAuth={false}>
           <ForgotPassword />
+        </ProtectedRoute>
       ),
     },
     {
       path: "/reset-password",
       element: (
+        <ProtectedRoute requireAuth={false}>
           <ResetPassword />
+        </ProtectedRoute>
       ),
     },
     {
@@ -59,23 +67,23 @@ function App() {
     {
       path: "/partners",
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute requireOnboarding={true}>
           <Partners />
         </ProtectedRoute>
       ),
     },
     {
-      path: "/connect-profile/",
+      path: "/connect-profile/:partnerId",
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute requireOnboarding={true}>
           <ConnectProfile />
         </ProtectedRoute>
       ),
     },
     {
-      path: "/connected-profile/",
+      path: "/connected-profile/:partnerId",
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute requireOnboarding={true}>
           <ConnectedProfile />
         </ProtectedRoute>
       ),
@@ -83,23 +91,23 @@ function App() {
     {
       path: "/see-more/",
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute requireOnboarding={true}>
           <SeeMore />
         </ProtectedRoute>
       ),
     },
     {
-      path: "/logout",
+      path: "/profile",
       element: (
-        <ProtectedRoute>
-          <LogOut />
+        <ProtectedRoute requireOnboarding={true}>
+          <UserProfile />
         </ProtectedRoute>
       ),
     },
     {
       path: "/onboarding-step-1",
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute requireOnboarding={true}>
           <Onboarding />
         </ProtectedRoute>
       ),
@@ -107,7 +115,7 @@ function App() {
     {
       path: "/onboarding-step-2",
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute requireOnboarding={true}>
           <OnboardingSecond />
         </ProtectedRoute>
       ),
@@ -115,7 +123,7 @@ function App() {
     {
       path: "/onboarding-step-3",
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute requireOnboarding={true}>
           <OnboardingThird />
         </ProtectedRoute>
       ),
@@ -123,7 +131,7 @@ function App() {
     {
       path: "/onboarding-step-4",
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute requireOnboarding={true}>
           <OnboardingFourth />
         </ProtectedRoute>
       ),
@@ -131,7 +139,7 @@ function App() {
     {
       path: "/onboarding-step-final",
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute requireOnboarding={true}>
           <OnboardingFinal />
         </ProtectedRoute>
       ),

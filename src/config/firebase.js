@@ -7,13 +7,9 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   sendPasswordResetEmail,
+  signOut,
 } from "firebase/auth";
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-} from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import {
   handleFirebaseOperation,
   showSuccessToast,
@@ -41,7 +37,7 @@ export const getUserFromFirestore = async (uid) => {
     if (docSnap.exists()) {
       return docSnap.data();
     } else {
-      throw new Error("User not found in Firestore");
+      throw new Error("User not found");
     }
   }, "Failed to fetch user data");
 
@@ -50,6 +46,16 @@ export const getUserFromFirestore = async (uid) => {
   }
 
   return result.data;
+};
+
+export const getUserFromFirestoreSilent = async (uid) => {
+  const userRef = doc(db, "users", uid);
+  const docSnap = await getDoc(userRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    throw new Error("User not found");
+  }
 };
 
 export const saveUserToFirestore = async (user, method, fullName = null) => {
@@ -75,14 +81,26 @@ export const saveUserToFirestore = async (user, method, fullName = null) => {
 
 export const signInWithGoogle = async () => {
   const result = await handleFirebaseOperation(async () => {
+    provider.setCustomParameters({
+      prompt: "select_account",
+    });
+
     const result = await signInWithPopup(auth, provider);
     let userData;
+
     try {
-      userData = await getUserFromFirestore(result.user.uid);
+      userData = await getUserFromFirestoreSilent(result.user.uid);
     } catch {
-      await saveUserToFirestore(result.user, "google");
-      userData = await getUserFromFirestore(result.user.uid);
+      // User doesn't exist, create new user
+      try {
+        await saveUserToFirestore(result.user, "google");
+        userData = await getUserFromFirestoreSilent(result.user.uid);
+      } catch (saveError) {
+        console.error("Failed to save user data:", saveError);
+        throw new Error("Failed to create your account. Please try again.");
+      }
     }
+
     showSuccessToast("Successfully signed in with Google!");
     return userData;
   }, "Failed to sign in with Google");
@@ -178,11 +196,22 @@ export const sendPasswordReset = async (email) => {
     const actionCodeSettings = {
       url: `${window.location.origin}/reset-password`,
       handleCodeInApp: true,
-    }
+    };
 
     await sendPasswordResetEmail(auth, email, actionCodeSettings);
     showSuccessToast("Password reset email sent! Check your inbox.");
   }, "Failed to send password reset email");
+
+  if (!result.success) {
+    throw result.error;
+  }
+};
+
+export const signOutUser = async () => {
+  const result = await handleFirebaseOperation(async () => {
+    await signOut(auth);
+    showSuccessToast("Successfully signed out!");
+  }, "Failed to sign out");
 
   if (!result.success) {
     throw result.error;

@@ -1,13 +1,28 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import defaultUserIcon from "../../../assets/ui_user.svg";
+import ContactModal from "../../ContactModal";
+import ConnectionModal from "../../ConnectionModal";
 
-export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
-  const [loading, setLoading] = useState(false);
+export default function PartnersCard({ partner = {}, user = {} }) {
+  const [loading] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [showConnectionModal, setShowConnectionModal] = useState(false);
 
-  const handleClick = async () => {
-    setLoading(true);
-    await onButtonClick(user, setLoading);
+  // Use partner data if available, otherwise fall back to user data
+  const data = partner.id ? partner : user;
+
+  const handleConnectClick = () => {
+    setShowConnectionModal(true);
+  };
+
+  const handleMessageClick = () => {
+    setShowContactModal(true);
+  };
+
+  const handleConnectionSuccess = () => {
+    // Refresh the partners list or update the UI
+    window.location.reload(); // Simple refresh for now
   };
 
   const getButton = () => {
@@ -22,17 +37,18 @@ export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
       );
     }
 
-    switch (user.connectionStatus) {
-      case "connected":
-        return (
-          <button
-            disabled
-            className="w-full px-4 py-2 text-base font-medium text-white bg-green-500 rounded-lg opacity-80 cursor-not-allowed"
-          >
-            Connected
-          </button>
-        );
+    if (data.isConnected) {
+      return (
+        <button
+          onClick={handleMessageClick}
+          className="w-full px-4 py-2 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition"
+        >
+          Message
+        </button>
+      );
+    }
 
+    switch (data.connectionStatus) {
       case "pending":
         return (
           <button
@@ -46,7 +62,7 @@ export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
       default:
         return (
           <button
-            onClick={handleClick}
+            onClick={handleConnectClick}
             className="w-full px-4 py-2 text-base font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition"
           >
             Connect
@@ -61,8 +77,8 @@ export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
         {/* Profile Image */}
         <div className="w-16 h-16 rounded-full overflow-hidden border bg-gray-100 flex items-center justify-center">
           <img
-            src={user.image || defaultUserIcon}
-            alt={user.name || "User"}
+            src={data.profilePicture || data.image || defaultUserIcon}
+            alt={data.fullName || data.name || "User"}
             className="w-full h-full object-cover"
           />
         </div>
@@ -70,19 +86,34 @@ export default function PartnersCard({ user = {}, onButtonClick = () => {} }) {
         {/* User Info */}
         <div className="flex flex-col items-center justify-center text-center">
           <Link
-            to="/connect-profile"
+            to={`/connect-profile/${data.uid || data.id}`}
             className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition pb-3"
           >
-            {user.name || "John Doe"}
+            {data.fullName || data.name || "John Doe"}
           </Link>
           <p className="text-base text-gray-500">
-            {user.goal || "Learn React and work on a project"}
+            {data.goals?.[0] ||
+              data.goal ||
+              "Learn React and work on a project"}
           </p>
         </div>
       </div>
 
-      {/* Action Button */}
       <div className="mt-4 w-full">{getButton()}</div>
+
+      {/* Modals */}
+      <ContactModal
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+        partner={data}
+      />
+
+      <ConnectionModal
+        isOpen={showConnectionModal}
+        onClose={() => setShowConnectionModal(false)}
+        partner={data}
+        onSuccess={handleConnectionSuccess}
+      />
     </div>
   );
 }

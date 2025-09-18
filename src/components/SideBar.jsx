@@ -1,27 +1,38 @@
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 import logo from "../assets/logo.svg";
+import LogoutModal from "./LogoutModal";
 
 export default function SideBar() {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
   return (
-    <nav className="h-full w-64 bg-white shadow-md flex flex-col px-4 pt-8 pb-6" aria-label="Primary">
-      <SidebarContent />
-    </nav>
+    <>
+      <nav
+        className="h-full w-64 bg-white shadow-md flex flex-col px-4 pt-8 pb-6"
+        aria-label="Primary"
+      >
+        <SidebarContent onLogoutClick={() => setShowLogoutModal(true)} />
+      </nav>
+      <LogoutModal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+      />
+    </>
   );
 }
 
-function SidebarContent() {
+function SidebarContent({ onLogoutClick }) {
   const location = useLocation();
 
   return (
     <div className="flex flex-col justify-between h-full">
-      {/* Logo */}
       <div className="flex flex-col gap-y-1">
         <div className="flex items-center gap-2 mb-8">
           <img src={logo} alt="App Logo" className="w-8 h-8" />
           <p className="font-bold text-lg">CommitBuddy</p>
         </div>
 
-        {/* Main Links */}
         <div className="flex flex-col gap-2">
           <SidebarItem
             icon={<DashboardIcon />}
@@ -43,32 +54,38 @@ function SidebarContent() {
         </div>
       </div>
 
-      {/* Logout */}
       <div className="flex flex-col gap-2 pt-4">
         <SidebarItem
           icon={<LogoutIcon />}
           label="Log Out"
-          to="/logout"
+          onClick={onLogoutClick}
           danger
-          active={location.pathname.startsWith("/logout")}
         />
       </div>
     </div>
   );
 }
 
-function SidebarItem({ icon, label, to, active, danger }) {
+function SidebarItem({ icon, label, to, active, danger, onClick }) {
+  const className = `flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-colors 
+    ${
+      active
+        ? "bg-blue-50 text-blue-600 font-semibold"
+        : "text-gray-700 hover:bg-gray-100"
+    } 
+    ${danger ? "hover:bg-red-200 text-red-600" : ""}`;
+
+  if (onClick) {
+    return (
+      <button onClick={onClick} className={className}>
+        <div className="w-5 h-5">{icon}</div>
+        <span>{label}</span>
+      </button>
+    );
+  }
+
   return (
-    <Link
-      to={to}
-      className={`flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-colors 
-        ${
-          active
-            ? "bg-blue-50 text-blue-600 font-semibold"
-            : "text-gray-700 hover:bg-gray-100"
-        } 
-        ${danger ? "hover:bg-red-200 text-red-600" : ""}`}
-    >
+    <Link to={to} className={className}>
       <div className="w-5 h-5">{icon}</div>
       <span>{label}</span>
     </Link>

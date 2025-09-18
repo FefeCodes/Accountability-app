@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import star from "../../../assets/star.svg";
 
-export default function ConnectedSecondContent() {
+export default function ConnectedSecondContent({ partner }) {
+  if (!partner) {
+    return (
+      <div className="w-full h-auto p-4 sm:p-6 lg:p-8 flex items-center justify-center rounded-xl shadow-md bg-white">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-auto p-4 sm:p-6 lg:p-8 flex flex-col gap-y-6 rounded-xl shadow-md bg-white">
       <div className="flex flex-col gap-y-6">
@@ -19,44 +27,48 @@ export default function ConnectedSecondContent() {
               </p>
             </div>
           </div>
+          {partner.interests && partner.interests.length > 0 && (
+            <div className="flex flex-col gap-y-2">
+              <h4 className="font-semibold text-lg sm:text-xl">Interests</h4>
+              <div className="flex flex-wrap gap-2">
+                {partner.interests.map((interest, index) => (
+                  <span
+                    key={index}
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
+                  >
+                    {interest}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {partner.goals && partner.goals.length > 0 && (
           <div className="flex flex-col gap-y-2">
-            <h4 className="font-semibold text-lg sm:text-xl">
-              Mutual Connections
+            <h4 className="font-semibold text-lg sm:text-xl text-gray-900">
+              Goals
             </h4>
-            <div className="flex flex-wrap gap-2">
-              {["Jane Doe", "Fefe", "Gracie", "Ara"].map((name, index) => (
-                <span
-                  key={index}
-                  className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
-                >
-                  {name}
-                </span>
+            <div className="prose prose-sm sm:prose-base max-w-none">
+              {partner.goals.map((goal, index) => (
+                <p key={index} className="text-gray-600 leading-relaxed">
+                  • {goal}
+                </p>
               ))}
             </div>
           </div>
-        </div>
+        )}
 
-        <div className="flex flex-col gap-y-2">
-          <h4 className="font-semibold text-lg sm:text-xl text-gray-900">
-            My Goal
-          </h4>
-          <div className="prose prose-sm sm:prose-base max-w-none">
-            <p className="text-gray-600 leading-relaxed">
-              I want to build a fully functional web app using React within the
-              next 6 weeks. The app will include user authentication, responsive
-              design, and data management with hooks and state. I'll commit 10
-              hours per week to coding, following tutorials, and documenting my
-              progress.
-            </p>
-            <p className="text-gray-600 leading-relaxed mt-3">
-              My accountability partner will help me stay on track by reviewing
-              my GitHub commits and project milestones. By the end of this goal,
-              I expect to have a polished portfolio project that demonstrates my
-              skills in modern frontend development and improves my chances of
-              landing freelance or junior developer opportunities.
-            </p>
+        {partner.bio && (
+          <div className="flex flex-col gap-y-2">
+            <h4 className="font-semibold text-lg sm:text-xl text-gray-900">
+              About
+            </h4>
+            <div className="prose prose-sm sm:prose-base max-w-none">
+              <p className="text-gray-600 leading-relaxed">{partner.bio}</p>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="flex flex-col gap-y-2">
           <h4 className="font-semibold text-lg sm:text-xl text-gray-900">
@@ -92,7 +104,7 @@ export default function ConnectedSecondContent() {
             />
           ))}
         </div>
-        <p className="text-sm">5.0 out 0f 5 stars</p>
+        <p className="text-sm">5.0 out of 5 stars</p>
       </div>
     </div>
   );

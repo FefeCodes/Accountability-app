@@ -154,3 +154,18 @@ export const handleFirebaseOperation = async (
     return { success: false, error };
   }
 };
+
+// Image validation utilities
+// Firebase Firestore has a 1MB limit per field value
+// Base64 encoding increases size by ~33%, so we need to be more conservative
+const FIREBASE_FIELD_LIMIT = 1048487;
+
+export const validateImageSize = (file, maxSizeInMB = 0.75) => {
+  const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+  return file.size <= maxSizeInBytes;
+};
+
+export const validateDataUrlSize = (dataUrl) => {
+  const dataUrlSize = new Blob([dataUrl]).size;
+  return dataUrlSize <= FIREBASE_FIELD_LIMIT;
+};
