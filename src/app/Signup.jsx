@@ -39,9 +39,11 @@ export default function Signup() {
         formData.password
       );
       setUserProfile(userData);
-      navigate("/onboarding-step-1");
+
+      navigate(`/onboarding-step-${userData.onboardingStep}`);
     } catch (error) {
       console.error("Signup Error:", error);
+      showErrorToast(error, "Failed to create account. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -52,9 +54,11 @@ export default function Signup() {
     try {
       const userData = await signInWithGoogle();
       setUserProfile(userData);
-      navigate("/onboarding-step-1");
+
+      navigate(`/onboarding-step-${userData.onboardingStep}`);
     } catch (error) {
       console.error("Google Signup Error:", error);
+      showErrorToast(error, "Failed to sign up with Google. Please try again.");
     } finally {
       setLoading(false);
     }

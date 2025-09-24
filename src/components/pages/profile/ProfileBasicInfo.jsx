@@ -23,7 +23,7 @@ export default function ProfileBasicInfo({ userData, onUpdate, loading }) {
         Basic Information
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Read-only fields */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>

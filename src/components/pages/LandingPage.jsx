@@ -2,6 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../hooks/useTheme";
 import ThemeToggle from "../ThemeToggle";
 import logo from "../../assets/logo.svg";
+import img1 from "../../assets/Rectangle-22.png";
+import img2 from "../../assets/Rectangle-19.png";
+import img3 from "../../assets/Rectangle-21.png";
+import img4 from "../../assets/Rectangle-13.png";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -14,6 +18,8 @@ const LandingPage = () => {
   const handleSignIn = () => {
     navigate("/login");
   };
+
+  const images = [img1, img2, img3, img4];
 
   return (
     <div
@@ -70,7 +76,7 @@ const LandingPage = () => {
         <div className="w-full relative z-10">
           <div className="text-center w-full gap-y-1 flex flex-col items-center">
             <h1 className="text-3xl md:text-7xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
-              Find Your Accountability Partner
+              Find Your <br /> Accountability Partner
             </h1>
             <h2 className="text-xl md:text-4xl font-bold mb-4 md:mb-8">
               Achieve More, Together
@@ -127,22 +133,27 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="px-4 md:px-10 py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {[1, 2, 3, 4].map((i) => (
+      <section className="px-4 md:px-6 lg:px-8 py-8">
+        <div className="max-w-xs sm:max-w-2xl md:max-w-none mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {images.map((src, i) => (
               <div
                 key={i}
                 className={`aspect-square rounded-2xl overflow-hidden ${
                   isDarkMode ? "bg-gray-700" : "bg-gray-200"
-                } flex items-center justify-center`}
+                } flex items-center justify-center transition-transform duration-300 hover:scale-105
+          ${i === 0 || i === 2 ? "-mt-6" : "mt-0"} animate-slowbounce`}
               >
                 <div
                   className={`${
                     isDarkMode ? "bg-gray-600" : "bg-gray-300"
                   } flex items-center justify-center`}
                 >
-                  <img className="" />
+                  <img
+                    src={src}
+                    alt={`Preview ${i + 1}`}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
                 </div>
               </div>
             ))}
@@ -270,7 +281,7 @@ const LandingPage = () => {
             isDarkMode ? "text-gray-400" : "text-gray-600"
           }`}
         >
-          No excuses. Just Progress
+          No excuses. Just progress
         </p>
       </footer>
     </div>

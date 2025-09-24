@@ -320,19 +320,19 @@ export const getUserGoals = async (userId) => {
 // Function to get dashboard statistics
 export const getDashboardStats = async (userId) => {
   try {
-    const [tasks, goals, partners] = await Promise.all([
+    const [tasks, goals, allUsers, userRelationships] = await Promise.all([
       getUserTasks(userId),
       getUserGoals(userId),
-      getPartners(),
+      getAllUsersAsPartners(userId),
+      getUserPartnerRelationships(userId),
     ]);
 
     const completedTasks = tasks.filter((task) => task.isCompleted).length;
-    const connectedPartners = partners.filter(
-      (partner) => partner.isConnected
-    ).length;
+    const connectedPartners = userRelationships.connectedPartners.length;
+    const totalPartners = allUsers.length;
 
     return {
-      totalPartners: partners.length,
+      totalPartners,
       connectedPartners,
       totalTasks: tasks.length,
       completedTasks,

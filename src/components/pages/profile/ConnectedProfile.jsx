@@ -39,7 +39,7 @@ export default function ConnectedProfile() {
   }, [partnerId, navigate]);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="w-full flex flex-row min-h-screen bg-gray-100">
       {/* Desktop Sidebar */}
       <aside className="hidden md:block fixed top-0 left-0 h-screen w-64 bg-white shadow-md z-30">
         <SideBar />

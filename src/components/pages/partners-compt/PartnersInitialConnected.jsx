@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../config/firebase"; // adjust to your setup
 import { Link } from "react-router-dom";
 import defaultUserIcon from "../../../assets/ui_user.svg";
 import ContactModal from "../../ContactModal";
@@ -10,9 +12,28 @@ export default function PartnersInitialConnected({
 }) {
   const [loading, setLoading] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   // Use partner data if available, otherwise fall back to user data
   const data = partner.id ? partner : user;
+
+  useEffect(() => {
+    if (data?.id) {
+      const fetchUser = async () => {
+        try {
+          const ref = doc(db, "users", data.id); // assumes users collection
+          const snap = await getDoc(ref);
+          if (snap.exists()) {
+            setUserData(snap.data());
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+
+      fetchUser();
+    }
+  }, [data?.id]);
 
   const handleMessageClick = () => {
     setShowContactModal(true);
@@ -40,7 +61,7 @@ export default function PartnersInitialConnected({
         return (
           <button
             disabled
-            className="w-full px-4 py-2 text-base font-medium text-white bg-green-500 rounded-lg opacity-80 cursor-not-allowed"
+            className="w-full px-4 py-2 text-base font-medium text-white bg-blue-600 rounded-lg opacity-80 cursor-not-allowed"
           >
             Connected
           </button>
@@ -68,32 +89,33 @@ export default function PartnersInitialConnected({
     }
   };
 
+  const displayData = userData || data; // prefer DB data if loaded
+
   return (
     <div className="w-full sm:w-full lg:w-full flex flex-col items-center justify-between p-4 bg-white rounded-xl shadow-sm">
       <div className="flex flex-col items-center gap-3">
         {/* Profile Image with fallback */}
         <div className="w-16 h-16 rounded-full overflow-hidden border bg-gray-100 flex items-center justify-center">
           <img
-            src={data.profilePicture || data.image || defaultUserIcon}
-            alt={data.name || "User"}
+            src={
+              displayData.profilePicture || displayData.image || defaultUserIcon
+            }
+            alt={displayData.fullName || "User"}
             className="w-full h-full object-cover"
           />
         </div>
 
         {/* User Info */}
         <div className="flex flex-col items-center justify-center text-center">
-          {/* Username clickable */}
           <Link
             to={`/connected-profile/${data.id}`}
             className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition pb-3"
           >
-            {data.name || "John Doe"}
+            {displayData.fullName}
           </Link>
 
           <p className="text-base text-gray-500">
-            {data.goals?.[0] ||
-              data.goal ||
-              "Learn React and work on a project"}
+            {displayData.goals?.[0] || displayData.goal}
           </p>
         </div>
       </div>
@@ -105,7 +127,7 @@ export default function PartnersInitialConnected({
       <ContactModal
         isOpen={showContactModal}
         onClose={() => setShowContactModal(false)}
-        partner={data}
+        partner={displayData}
       />
     </div>
   );

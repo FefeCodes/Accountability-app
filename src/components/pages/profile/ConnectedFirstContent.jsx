@@ -19,7 +19,7 @@ export default function ConnectedFirstContent({ partner }) {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row items-start justify-between p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
+      <div className="w-full flex flex-col sm:flex-row items-start justify-between p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
         <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-6">
           <div className="rounded-full overflow-hidden w-16 h-16 sm:w-20 sm:h-20 border-2 border-gray-200">
             <img
@@ -30,13 +30,13 @@ export default function ConnectedFirstContent({ partner }) {
           </div>
         </div>
 
-        <div className="w-full flex flex-col sm:flex-row justify-between items-start gap-4">
+        <div className="w-full flex flex-row sm:flex-row justify-between items-start gap-1 sm:gap-4">
           <div className="flex flex-col gap-y-4 flex-1">
-            <div className="flex flex-col gap-y-2">
+            <div className="flex flex-col gap-y-1">
               <h3 className="font-semibold text-xl sm:text-2xl text-gray-900">
                 {partner.fullName || partner.name || "Unknown User"}
               </h3>
-              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
                 {partner.bio || partner.goals?.[0] || "No bio available"}
               </p>
             </div>
@@ -59,7 +59,9 @@ export default function ConnectedFirstContent({ partner }) {
                 ?.toLowerCase()
                 .replace(/\s+/g, "") || "user"}
             </p>
-            <p className="font-light text-gray-400 text-sm">GMT+1</p>
+            <p className="font-light text-gray-400 text-sm">
+              {partner.timezone}
+            </p>
           </div>
         </div>
       </div>

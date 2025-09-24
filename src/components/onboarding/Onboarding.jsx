@@ -167,7 +167,6 @@ export default function Onboarding() {
       setLoading(false);
     }
   };
-
   return (
     <main
       className="w-full min-h-screen flex flex-col justify-start items-center gap-y-6 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100"
@@ -175,7 +174,6 @@ export default function Onboarding() {
       aria-labelledby="onboarding-basic-info-heading"
     >
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-
       {/* Mobile: centered logo */}
       <div className="lg:hidden w-full flex justify-center pt-4">
         <Link to="/">
@@ -188,14 +186,12 @@ export default function Onboarding() {
           <img src={logo} alt="App Logo" className="h-10 w-10" />
         </Link>
       </div>
-
       <h2
         id="onboarding-basic-info-heading"
         className="font-bold text-2xl lg:text-3xl text-gray-900"
       >
         Basic Info
       </h2>
-
       <section
         className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-10 lg:gap-y-8"
         aria-labelledby="basic-info-form"
@@ -299,7 +295,6 @@ export default function Onboarding() {
           </button>
         </div>
       </section>
-
       {/* Camera Modal */}
       {showCamera && (
         <div

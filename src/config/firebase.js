@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { toast } from "react-toastify";
 import {
   getAuth,
   GoogleAuthProvider,
@@ -61,17 +62,21 @@ export const getUserFromFirestoreSilent = async (uid) => {
 export const saveUserToFirestore = async (user, method, fullName = null) => {
   const result = await handleFirebaseOperation(async () => {
     const userRef = doc(db, "users", user.uid);
-    await setDoc(userRef, {
-      uid: user.uid,
-      fullName: fullName || user.displayName || "",
-      email: user.email,
-      profilePicture: user.photoURL || null,
-      authProvider: method,
-      onboardingStep: 1,
-      onboardingCompleted: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    });
+    await setDoc(
+      userRef,
+      {
+        uid: user.uid,
+        fullName: fullName || user.displayName || "",
+        email: user.email,
+        profilePicture: user.photoURL || null,
+        authProvider: method,
+        onboardingStep: 1,
+        onboardingCompleted: false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+      { merge: true }
+    );
   }, "Failed to save user data");
 
   if (!result.success) {
@@ -133,16 +138,27 @@ export const signInWithEmail = async (email, password) => {
 
 export const signUpWithEmail = async (fullName, email, password) => {
   const result = await handleFirebaseOperation(async () => {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    await updateProfile(userCredential.user, { displayName: fullName });
-    await saveUserToFirestore(userCredential.user, "email", fullName);
-    const userData = await getUserFromFirestore(userCredential.user.uid);
-    showSuccessToast("Account created successfully!");
-    return userData;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await updateProfile(userCredential.user, { displayName: fullName });
+      await saveUserToFirestore(userCredential.user, "email", fullName);
+      const userData = await getUserFromFirestore(userCredential.user.uid);
+      showSuccessToast("Account created successfully!");
+
+      return userData;
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("This email is already registered. Please log in instead.");
+      } else {
+        toast.error(error.message);
+      }
+      throw error; // re-throw so handleFirebaseOperation can catch
+    }
   }, "Failed to create account");
 
   if (!result.success) {

@@ -56,7 +56,7 @@ export default function Partners() {
         <div className="fixed top-0 left-0 right-0 md:left-64 z-20">
           <Header title="Partners" onMenuClick={() => setSidebarOpen(true)} />
         </div>
-        <div className="mt-20 px-2 sm:px-4 sm:py-2 overflow-y-auto h-[calc(100vh-5rem)]">
+        <div className="mt-20 px-1 sm:px-4 sm:py-2 overflow-y-auto h-[calc(100vh-5rem)]">
           <PartnersMainContent />
         </div>
       </div>

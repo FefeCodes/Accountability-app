@@ -112,31 +112,35 @@ export default function PartnersMainContent() {
   const filteredPendingUsers = filterUsersBySearch(pendingUsers);
 
   return (
-    <div className="w-full px-6 sm:px-6 py-6 h-[calc(100vh-5rem)] flex flex-col">
+    <div className="w-full px-2 sm:px-6 py-6 h-[calc(100vh-5rem)] flex flex-col">
       {/* Fixed Tabs + Search */}
       <div
-        className="flex flex-row items-center gap-3 sm:gap-6 px-3 sm:px-5 py-3 bg-white rounded-t-xl shadow-sm overflow-x-auto flex-shrink-0"
+        className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 px-3 sm:px-5 py-3 bg-white rounded-t-xl shadow-sm overflow-x-auto flex-shrink-0"
         role="tablist"
         aria-label="Partners tabs"
       >
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            role="tab"
-            aria-selected={activeTab === tab}
-            tabIndex={activeTab === tab ? 0 : -1}
-            className={`whitespace-nowrap px-4 sm:px-5 py-2 sm:py-2.5 text-base font-medium transition-colors focus:outline-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 relative ${
-              activeTab === tab
-                ? "text-[#3C91E6] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-[#3C91E6] after:rounded"
-                : "text-gray-600 hover:text-[#3C91E6]"
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
+        {/* Tabs */}
+        <div className="flex flex-row items-center w-full sm:w-auto">
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              role="tab"
+              aria-selected={activeTab === tab}
+              tabIndex={activeTab === tab ? 0 : -1}
+              className={`flex-1 whitespace-nowrap px-4 sm:px-5 py-2 sm:py-2.5 text-base font-medium transition-colors focus:outline-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 relative ${
+                activeTab === tab
+                  ? "text-[#3C91E6] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-[#3C91E6] after:rounded"
+                  : "text-gray-600 hover:text-[#3C91E6]"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
 
-        <div className="ml-6 w-40 sm:w-1/2">
+        {/* Search - Full width on mobile, half width on desktop */}
+        <div className="w-full sm:w-1/2 sm:ml-6">
           <Search
             value={searchQuery}
             onChange={setSearchQuery}
@@ -146,7 +150,7 @@ export default function PartnersMainContent() {
       </div>
 
       {/* Scrollable Content */}
-      <div className="mt-4 px-3 sm:px-5 py-6 bg-white shadow-sm rounded-b-xl flex-1 flex flex-col overflow-hidden">
+      <div className="mt-4 px-2 sm:px-5 py-2 bg-white shadow-sm rounded-b-xl flex-1 flex flex-col overflow-hidden">
         {loading ? (
           <div className="px-3 sm:px-5 py-6 overflow-y-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
@@ -160,7 +164,7 @@ export default function PartnersMainContent() {
         ) : filteredConnectedUsers.length === 0 &&
           filteredAvailableUsers.length === 0 &&
           filteredPendingUsers.length === 0 ? (
-          <div className="px-3 sm:px-5 py-6 overflow-y-auto flex items-center justify-center min-h-[400px]">
+          <div className="px-3 sm:px-5 py-2 overflow-y-auto flex items-center justify-center min-h-[400px]">
             <div className="text-center">
               <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                 <svg
@@ -196,7 +200,7 @@ export default function PartnersMainContent() {
           </div>
         ) : (
           <div
-            className={`px-3 sm:px-5 py-6 overflow-y-auto 
+            className={`px-1 sm:px-5 py-2 overflow-y-auto 
               ${
                 activeTab === "Connected"
                   ? "flex flex-col w-full gap-4 sm:gap-6"
@@ -241,13 +245,48 @@ export default function PartnersMainContent() {
               </>
             )}
 
-            {activeTab === "Connect" &&
-              filteredAvailableUsers.map((user) => (
-                <PartnersCard
-                  key={user.uid}
-                  partner={{ ...user, connectionStatus: "available" }}
-                />
-              ))}
+            {activeTab === "Connect" && (
+              <>
+                {filteredAvailableUsers.length === 0 ? (
+                  <div className="col-span-full flex items-center justify-center min-h-[400px]">
+                    <div className="text-center">
+                      <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                        <svg
+                          className="w-12 h-12 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                          />
+                        </svg>
+                      </div>
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        No potential partners yet
+                      </h3>
+                      <p className="text-gray-500 mb-4">Try again later</p>
+                      <button
+                        onClick={() => window.location.reload()}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                      >
+                        Refresh
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  filteredAvailableUsers.map((user) => (
+                    <PartnersCard
+                      key={user.uid}
+                      partner={{ ...user, connectionStatus: "available" }}
+                    />
+                  ))
+                )}
+              </>
+            )}
 
             {activeTab === "Connected" &&
               filteredConnectedUsers.map((user) => (
