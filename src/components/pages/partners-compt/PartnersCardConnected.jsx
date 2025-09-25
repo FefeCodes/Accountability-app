@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../../hooks/useAuth";
 import defaultUserIcon from "../../../assets/ui_user.svg";
 import ContactModal from "../../ContactModal";
 
@@ -9,8 +8,6 @@ export default function PartnersCardConnected({ partner = {}, user = {} }) {
 
   // Use partner data if available, otherwise fall back to user data
   const data = partner.id ? partner : user;
-
-  const { userProfile } = useAuth();
 
   const handleMessageClick = () => {
     setShowContactModal(true);

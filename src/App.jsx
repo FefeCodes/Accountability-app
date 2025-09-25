@@ -107,7 +107,7 @@ function App() {
     {
       path: "/onboarding-step-1",
       element: (
-        <ProtectedRoute requireOnboarding={true}>
+        <ProtectedRoute>
           <Onboarding />
         </ProtectedRoute>
       ),
@@ -115,7 +115,7 @@ function App() {
     {
       path: "/onboarding-step-2",
       element: (
-        <ProtectedRoute requireOnboarding={true}>
+        <ProtectedRoute>
           <OnboardingSecond />
         </ProtectedRoute>
       ),
@@ -123,7 +123,7 @@ function App() {
     {
       path: "/onboarding-step-3",
       element: (
-        <ProtectedRoute requireOnboarding={true}>
+        <ProtectedRoute>
           <OnboardingThird />
         </ProtectedRoute>
       ),
@@ -131,7 +131,7 @@ function App() {
     {
       path: "/onboarding-step-4",
       element: (
-        <ProtectedRoute requireOnboarding={true}>
+        <ProtectedRoute>
           <OnboardingFourth />
         </ProtectedRoute>
       ),
@@ -139,7 +139,7 @@ function App() {
     {
       path: "/onboarding-step-final",
       element: (
-        <ProtectedRoute requireOnboarding={true}>
+        <ProtectedRoute>
           <OnboardingFinal />
         </ProtectedRoute>
       ),

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../hooks/useAuth";
-import { getDashboardStats, seedUserData } from "../../../utils/firebaseData";
+import { getDashboardStats } from "../../../utils/firebaseData";
 
 export default function FirstContent() {
   const { currentUser, userProfile } = useAuth();
@@ -20,12 +20,6 @@ export default function FirstContent() {
 
       try {
         setLoading(true);
-
-        try {
-          await seedUserData(currentUser.uid);
-        } catch (seedError) {
-          console.warn("Could not seed user data:", seedError);
-        }
 
         const dashboardStats = await getDashboardStats(currentUser.uid);
 
@@ -97,6 +91,11 @@ export default function FirstContent() {
         <div className="w-full flex flex-col items-start gap-y-1 py-4 px-5 bg-[#FAF6FF] drop-shadow-sm border-l-4 border-l-[#8A38F5]">
           <p className="font-light text-sm">Tasks Done</p>
           <p className="text-xl font-semibold">{stats.completedTasks}</p>
+        </div>
+
+        <div className="w-full flex flex-col items-start gap-y-1 py-4 px-5 bg-[#F7FFFB] drop-shadow-sm border-l-4 border-l-[#2BB673]">
+          <p className="font-light text-sm">Active Goals</p>
+          <p className="text-xl font-semibold">{stats.activeGoals}</p>
         </div>
       </div>
     </div>

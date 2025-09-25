@@ -11,258 +11,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 
-// Sample partners data with contact information
-export const samplePartners = [
-  {
-    name: "Sarah Johnson",
-    email: "sarah.johnson@email.com",
-    profilePicture:
-      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-    bio: "Fitness enthusiast and productivity coach. Let's achieve our goals together!",
-    interests: ["Fitness", "Productivity", "Health"],
-    goals: ["Run a marathon", "Read 50 books this year"],
-    contactInfo: {
-      phone: "+1 (555) 123-4567",
-      email: "sarah.johnson@email.com",
-      linkedin: "https://linkedin.com/in/sarahjohnson",
-      instagram: "@sarahfitness",
-    },
-    isConnected: false,
-    connectionRequests: [],
-    createdAt: new Date().toISOString(),
-  },
-  {
-    name: "Michael Chen",
-    email: "michael.chen@email.com",
-    profilePicture:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    bio: "Software developer passionate about learning new technologies and building amazing products.",
-    interests: ["Technology", "Programming", "Learning"],
-    goals: ["Learn React Native", "Build a mobile app"],
-    contactInfo: {
-      phone: "+1 (555) 234-5678",
-      email: "michael.chen@email.com",
-      linkedin: "https://linkedin.com/in/michaelchen",
-      github: "https://github.com/michaelchen",
-    },
-    isConnected: false,
-    connectionRequests: [],
-    createdAt: new Date().toISOString(),
-  },
-  {
-    name: "Emily Rodriguez",
-    email: "emily.rodriguez@email.com",
-    profilePicture:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-    bio: "Artist and creative writer. Looking for accountability partners for creative projects!",
-    interests: ["Art", "Writing", "Creativity"],
-    goals: ["Complete a novel", "Hold an art exhibition"],
-    contactInfo: {
-      phone: "+1 (555) 345-6789",
-      email: "emily.rodriguez@email.com",
-      linkedin: "https://linkedin.com/in/emilyrodriguez",
-      instagram: "@emilycreates",
-    },
-    isConnected: true,
-    connectionRequests: [],
-    createdAt: new Date().toISOString(),
-  },
-  {
-    name: "David Kim",
-    email: "david.kim@email.com",
-    profilePicture:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    bio: "Entrepreneur and business coach. Let's build successful businesses together!",
-    interests: ["Business", "Entrepreneurship", "Networking"],
-    goals: ["Launch a startup", "Build a network of 1000+ connections"],
-    contactInfo: {
-      phone: "+1 (555) 456-7890",
-      email: "david.kim@email.com",
-      linkedin: "https://linkedin.com/in/davidkim",
-      twitter: "@davidkim_biz",
-    },
-    isConnected: true,
-    connectionRequests: [],
-    createdAt: new Date().toISOString(),
-  },
-  {
-    name: "Lisa Thompson",
-    email: "lisa.thompson@email.com",
-    profilePicture:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
-    bio: "Yoga instructor and wellness advocate. Focused on mental and physical health.",
-    interests: ["Yoga", "Wellness", "Meditation"],
-    goals: ["Complete yoga teacher training", "Meditate daily for a year"],
-    contactInfo: {
-      phone: "+1 (555) 567-8901",
-      email: "lisa.thompson@email.com",
-      linkedin: "https://linkedin.com/in/lisathompson",
-      instagram: "@lisayoga",
-    },
-    isConnected: false,
-    connectionRequests: [],
-    createdAt: new Date().toISOString(),
-  },
-  {
-    name: "James Wilson",
-    email: "james.wilson@email.com",
-    profilePicture:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-    bio: "Photographer and travel blogger. Always looking for new adventures and stories to tell.",
-    interests: ["Photography", "Travel", "Storytelling"],
-    goals: ["Visit 30 countries", "Publish a photography book"],
-    contactInfo: {
-      phone: "+1 (555) 678-9012",
-      email: "james.wilson@email.com",
-      linkedin: "https://linkedin.com/in/jameswilson",
-      instagram: "@jameswtravels",
-    },
-    isConnected: true,
-    connectionRequests: [],
-    createdAt: new Date().toISOString(),
-  },
-];
-
-export const sampleTasks = [
-  {
-    title: "Complete morning workout",
-    description: "30-minute cardio and strength training",
-    category: "Fitness",
-    priority: "high",
-    dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
-    isCompleted: false,
-    createdAt: new Date().toISOString(),
-  },
-  {
-    title: "Read 30 pages of current book",
-    description: "Continue reading 'Atomic Habits' by James Clear",
-    category: "Learning",
-    priority: "medium",
-    dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(), // Day after tomorrow
-    isCompleted: false,
-    createdAt: new Date().toISOString(),
-  },
-  {
-    title: "Update project documentation",
-    description: "Document the new API endpoints and update README",
-    category: "Work",
-    priority: "high",
-    dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
-    isCompleted: true,
-    completedAt: new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-  },
-  {
-    title: "Plan weekend activities",
-    description: "Research and plan fun activities for the weekend",
-    category: "Personal",
-    priority: "low",
-    dueDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString(),
-    isCompleted: false,
-    createdAt: new Date().toISOString(),
-  },
-  {
-    title: "Call family members",
-    description: "Check in with parents and siblings",
-    category: "Personal",
-    priority: "medium",
-    dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-    isCompleted: true,
-    completedAt: new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-  },
-];
-
-export const sampleGoals = [
-  {
-    title: "Learn React Native",
-    description: "Master React Native development to build mobile apps",
-    category: "Learning",
-    targetDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(), // 3 months
-    progress: 25,
-    milestones: [
-      { title: "Complete React Native basics", completed: true },
-      { title: "Build first mobile app", completed: false },
-      { title: "Publish app to app store", completed: false },
-    ],
-    isActive: true,
-    createdAt: new Date().toISOString(),
-  },
-  {
-    title: "Run a Marathon",
-    description: "Complete a full marathon within 6 months",
-    category: "Fitness",
-    targetDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString(), // 6 months
-    progress: 15,
-    milestones: [
-      { title: "Run 5K without stopping", completed: true },
-      { title: "Run 10K", completed: false },
-      { title: "Run half marathon", completed: false },
-      { title: "Complete full marathon", completed: false },
-    ],
-    isActive: true,
-    createdAt: new Date().toISOString(),
-  },
-];
-
-// Function to seed partners data
-export const seedPartnersData = async () => {
-  try {
-    const partnersRef = collection(db, "partners");
-
-    // Check if data already exists
-    const existingPartners = await getDocs(partnersRef);
-    if (!existingPartners.empty) {
-      return;
-    }
-
-    // Add sample partners
-    for (const partner of samplePartners) {
-      await addDoc(partnersRef, partner);
-    }
-  } catch (error) {
-    console.error("Error seeding partners data:", error);
-  }
-};
-
-// Function to seed user-specific data
-export const seedUserData = async (userId) => {
-  try {
-    // Seed tasks
-    const tasksRef = collection(db, "users", userId, "tasks");
-    const existingTasks = await getDocs(tasksRef);
-
-    if (existingTasks.empty) {
-      for (const task of sampleTasks) {
-        await addDoc(tasksRef, task);
-      }
-    }
-
-    // Seed goals
-    const goalsRef = collection(db, "users", userId, "goals");
-    const existingGoals = await getDocs(goalsRef);
-
-    if (existingGoals.empty) {
-      for (const goal of sampleGoals) {
-        await addDoc(goalsRef, goal);
-      }
-    }
-
-    // Update user profile with current goal
-    const userRef = doc(db, "users", userId);
-    await setDoc(
-      userRef,
-      {
-        currentGoal: sampleGoals[0].title,
-        updatedAt: new Date().toISOString(),
-      },
-      { merge: true }
-    );
-  } catch (error) {
-    console.error("Error seeding user data:", error);
-  }
-};
-
 // Function to get partners data
 export const getPartners = async () => {
   try {
@@ -280,37 +28,87 @@ export const getPartners = async () => {
   }
 };
 
-// Function to get user tasks
+// Function to get user tasks from the users collection document
 export const getUserTasks = async (userId) => {
   try {
-    const tasksRef = collection(db, "users", userId, "tasks");
-    const q = query(tasksRef, orderBy("createdAt", "desc"));
-    const querySnapshot = await getDocs(q);
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
 
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
+    if (!userSnap.exists()) {
+      return [];
+    }
+
+    const data = userSnap.data();
+    const tasks = Array.isArray(data.tasks) ? data.tasks : [];
+
+    // Normalize task shape similar to sampleTasks and sort by createdAt desc
+    const normalized = tasks.map((task, index) => ({
+      id: task.id || String(index),
+      title: task.title || "",
+      description: task.description || "",
+      category: task.category || "General",
+      priority: task.priority || "medium",
+      dueDate: task.dueDate || null,
+      isCompleted: Boolean(task.isCompleted),
+      completedAt: task.completedAt || null,
+      createdAt: task.createdAt || new Date().toISOString(),
     }));
+
+    return normalized.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
   } catch (error) {
     console.error("Error getting user tasks:", error);
     return [];
   }
 };
 
-// Function to get user goals
+// Function to get user goals from the users collection document
 export const getUserGoals = async (userId) => {
   try {
-    const goalsRef = collection(db, "users", userId, "goals");
-    const q = query(goalsRef, where("isActive", "==", true));
-    const querySnapshot = await getDocs(q);
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
 
-    // Sort in memory to avoid composite index requirement
-    const goals = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    if (!userSnap.exists()) {
+      return [];
+    }
 
-    return goals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const data = userSnap.data();
+    const goals = Array.isArray(data.goals) ? data.goals : [];
+
+    // Normalize goal shape similar to sampleGoals and only keep active ones
+    const normalized = goals.map((goal, index) => {
+      // Support legacy onboarding format where goals are strings
+      if (typeof goal === "string") {
+        return {
+          id: String(index),
+          title: goal,
+          description: "",
+          category: "General",
+          targetDate: null,
+          progress: 0,
+          milestones: [],
+          isActive: true,
+          createdAt: new Date().toISOString(),
+        };
+      }
+
+      return {
+        id: goal.id || String(index),
+        title: goal.title || "",
+        description: goal.description || "",
+        category: goal.category || "General",
+        targetDate: goal.targetDate || null,
+        progress: typeof goal.progress === "number" ? goal.progress : 0,
+        milestones: Array.isArray(goal.milestones) ? goal.milestones : [],
+        isActive: goal.isActive !== false,
+        createdAt: goal.createdAt || new Date().toISOString(),
+      };
+    });
+
+    return normalized
+      .filter((g) => g.isActive)
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   } catch (error) {
     console.error("Error getting user goals:", error);
     return [];

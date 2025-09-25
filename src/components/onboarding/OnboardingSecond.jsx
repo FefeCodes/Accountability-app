@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import ProgressBar from "../atoms/ProgressBar.jsx";
-import logo from "../../assets/logo.svg"
+import logo from "../../assets/logo.svg";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth.js";
 import { updateOnboardingProgress } from "../../config/firebase";
@@ -34,21 +34,32 @@ export default function OnboardingSecond() {
   }, [userProfile]);
 
   // toggle goal selection
-const toggleGoal = (goal) => {
-  if (selectedGoals.includes(goal)) {
-    // remove if already selected
-    setSelectedGoals(selectedGoals.filter((g) => g !== goal));
+  const toggleGoal = (goal) => {
+    if (selectedGoals.includes(goal)) {
+      // remove if already selected
+      setSelectedGoals(selectedGoals.filter((g) => g !== goal));
 
-    // also clear customGoal if "Custom" is removed
-    if (goal === "Custom") {
-      setCustomGoal("");
+      // also clear customGoal if "Custom" is removed
+      if (goal === "Custom") {
+        setCustomGoal("");
+      }
+    } else {
+      // add if not selected
+      setSelectedGoals([...selectedGoals, goal]);
     }
-  } else {
-    // add if not selected
-    setSelectedGoals([...selectedGoals, goal]);
-  }
-};
+  };
 
+  const buildGoalObject = (title) => ({
+    id: Date.now().toString() + Math.random().toString(36).slice(2),
+    title: title,
+    description: "",
+    category: "General",
+    targetDate: null,
+    progress: 0,
+    milestones: [],
+    isActive: true,
+    createdAt: new Date().toISOString(),
+  });
 
   const handleNext = async () => {
     if (selectedGoals.length === 0) {
@@ -62,14 +73,24 @@ const toggleGoal = (goal) => {
 
     setLoading(true);
     try {
+      // Transform selected goals (strings) into rich goal objects
+      const richGoals = selectedGoals.reduce((acc, goal) => {
+        if (goal === "Custom") {
+          if (customGoal.trim()) acc.push(buildGoalObject(customGoal.trim()));
+        } else {
+          acc.push(buildGoalObject(goal));
+        }
+        return acc;
+      }, []);
+
       await updateOnboardingProgress(currentUser.uid, 3, {
-        goals: selectedGoals,
+        goals: richGoals,
         customGoal: selectedGoals.includes("Custom") ? customGoal : null,
       });
 
       setUserProfile((prev) => ({
         ...prev,
-        goals: selectedGoals,
+        goals: richGoals,
         customGoal: selectedGoals.includes("Custom") ? customGoal : null,
         onboardingStep: 3,
       }));
@@ -85,7 +106,11 @@ const toggleGoal = (goal) => {
   };
 
   return (
-    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-6 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100" role="main" aria-labelledby="onboarding-goal-heading">
+    <main
+      className="w-full min-h-screen flex flex-col justify-start items-center gap-y-6 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100"
+      role="main"
+      aria-labelledby="onboarding-goal-heading"
+    >
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
 
       {/* Mobile: centered logo */}
@@ -101,11 +126,17 @@ const toggleGoal = (goal) => {
         </Link>
       </div>
 
-      <h2 id="onboarding-goal-heading" className="font-bold text-2xl lg:text-3xl text-gray-900">
+      <h2
+        id="onboarding-goal-heading"
+        className="font-bold text-2xl lg:text-3xl text-gray-900"
+      >
         Your Goals
       </h2>
 
-      <section className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-7 lg:gap-y-8" aria-labelledby="goal-question">
+      <section
+        className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-7 lg:gap-y-8"
+        aria-labelledby="goal-question"
+      >
         <h2 id="goal-question" className="text-xl font-semibold">
           What do you want to stay accountable for?
         </h2>
