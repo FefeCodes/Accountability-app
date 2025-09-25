@@ -19,6 +19,12 @@ export const ProtectedRoute = ({ children, requireAuth = true, requireOnboarding
   }
 
   if (!requireAuth && currentUser) {
+    // Allow access to login/signup pages even when authenticated
+    // This allows users to switch accounts or access these pages explicitly
+    if (location.pathname === '/login' || location.pathname === '/signup') {
+      return children;
+    }
+    
     if (userProfile?.onboardingCompleted) {
       return <Navigate to="/dashboard" replace />;
     } else {

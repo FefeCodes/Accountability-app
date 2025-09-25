@@ -21,16 +21,23 @@ export default function FirstContent() {
       try {
         setLoading(true);
 
-        // Try to seed user data if it doesn't exist
         try {
           await seedUserData(currentUser.uid);
         } catch (seedError) {
           console.warn("Could not seed user data:", seedError);
         }
 
-        // Get dashboard statistics
         const dashboardStats = await getDashboardStats(currentUser.uid);
-        setStats(dashboardStats);
+
+        // normalize with defaults
+        setStats({
+          totalPartners: dashboardStats.totalPartners ?? 0,
+          connectedPartners: dashboardStats.connectedPartners ?? 0,
+          totalTasks: dashboardStats.totalTasks ?? 0,
+          completedTasks: dashboardStats.completedTasks ?? 0,
+          activeGoals: dashboardStats.activeGoals ?? 0,
+          currentGoal: dashboardStats.currentGoal || "No active goal set",
+        });
       } catch (error) {
         console.error("Error fetching dashboard stats:", error);
       } finally {
@@ -61,8 +68,8 @@ export default function FirstContent() {
     <div className="w-full">
       <div>
         <h2 className="text-2xl md:text-2xl font-semibold">
-          Hi {userProfile?.fullName || userProfile?.username || "there"}, ready
-          to crush some goals today?
+          Hi {userProfile?.username || "there"}, ready to crush some goals
+          today?
         </h2>
         <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-[#545454] mt-2">
           <p className="font-light">Current Goal:</p>

@@ -53,7 +53,7 @@ export default function ProfileGoals({ userData, onUpdate, loading }) {
       </form>
 
       {/* Goals list */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         {goals.length === 0 ? (
           <div className="text-center py-8 text-gray-500">
             <p>No goals added yet. Add your first goal above!</p>
@@ -62,7 +62,7 @@ export default function ProfileGoals({ userData, onUpdate, loading }) {
           goals.map((goal, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
+              className="flex items-center justify-between gap-3 py-2 px-2 border border-gray-200 rounded-lg bg-white"
             >
               <input
                 type="text"
@@ -73,9 +73,24 @@ export default function ProfileGoals({ userData, onUpdate, loading }) {
               <button
                 onClick={() => handleRemoveGoal(index)}
                 disabled={loading}
-                className="px-3 py-1 text-red-600 hover:text-red-700 hover:bg-red-50 rounded transition-colors disabled:opacity-50"
+                className="text-red-600 hover:text-red-700 p-2 rounded-full transition-colors disabled:opacity-50"
+                aria-label="Remove goal"
               >
-                Remove
+                {/* Trash can SVG */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m-7 0h8"
+                  />
+                </svg>
               </button>
             </div>
           ))

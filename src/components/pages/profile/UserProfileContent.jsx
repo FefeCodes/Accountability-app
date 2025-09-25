@@ -112,10 +112,10 @@ export default function UserProfileContent({ userData, onUserDataUpdate }) {
             />
           </div>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
               {userData.fullName || "User"}
             </h1>
-            <p className="text-gray-600 mb-2">{userData.email}</p>
+            <p className="text-gray-600 mb-1">{userData.email}</p>
             <p className="text-sm text-gray-500">
               Member since {new Date(userData.createdAt).toLocaleDateString()}
             </p>

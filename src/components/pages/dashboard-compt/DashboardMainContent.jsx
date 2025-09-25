@@ -5,7 +5,7 @@ import ConnectionRequests from "../../ConnectionRequests";
 export default function DashboardMainContent() {
   return (
     <section
-      className="flex flex-col gap-6 sm:gap-8 p-4 sm:p-6 w-full bg-gray-50 h-9/10"
+      className="flex flex-col gap-6 sm:gap-8 p-2 sm:p-6 w-full bg-gray-50 h-9/10"
       aria-labelledby="dashboard-overview-heading"
     >
       <section

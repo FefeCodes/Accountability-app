@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import accountabilityHero from "../assets/accountability-hero.svg";
-import {
-  signInWithGoogle,
-  signInWithEmail,
-} from "../config/firebase";
+import { signInWithGoogle, signInWithEmail } from "../config/firebase";
 import LoginCompt from "../components/LoginCompt";
 import { useAuth } from "../hooks/useAuth";
 import { useTheme } from "../hooks/useTheme";
@@ -31,7 +28,7 @@ export default function Login() {
       if (userData.onboardingCompleted) {
         navigate("/dashboard");
       } else {
-        navigate(`/onboarding-step-${userData.onboardingStep || 1}`);
+        navigate(`/onboarding-step-${userData.onboardingStep}`);
       }
     } catch (error) {
       console.error("Login Error:", error);
@@ -49,7 +46,7 @@ export default function Login() {
       if (userData.onboardingCompleted) {
         navigate("/dashboard");
       } else {
-        navigate(`/onboarding-step-${userData.onboardingStep || 1}`);
+        navigate(`/onboarding-step-${userData.onboardingStep}`);
       }
     } catch (error) {
       console.error("Google Login Error:", error);
@@ -68,13 +65,16 @@ export default function Login() {
     >
       {/* Mobile: centered logo */}
       <div className="lg:hidden w-full flex justify-center pt-4">
-        <img src={logo} alt="App Logo" className="h-12 w-12" />
+        <Link to="/">
+          <img src={logo} alt="App Logo" className="h-12 w-12 cursor-pointer" />
+        </Link>
       </div>
       {/* Desktop: top-left logo */}
       <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
-        <img src={logo} alt="App Logo" className="h-12 w-12" />
+        <Link to="/">
+          <img src={logo} alt="App Logo" className="h-12 w-12 cursor-pointer" />
+        </Link>
       </div>
-
       <div className="hidden lg:flex lg:w-1/2 h-screen items-center justify-center">
         <img
           className="w-full h-full"
@@ -82,7 +82,6 @@ export default function Login() {
           alt="Accountability Hero"
         />
       </div>
-
       <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8">
         <LoginCompt
           formData={formData}

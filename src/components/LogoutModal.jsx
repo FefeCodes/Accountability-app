@@ -24,7 +24,7 @@ export default function LogoutModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
         className="absolute inset-0 bg-black/50 transition-opacity"
         onClick={onClose}
@@ -42,7 +42,7 @@ export default function LogoutModal({ isOpen, onClose }) {
           Are you sure you want to log out?
         </p>
 
-        <div className="flex justify-center gap-4 sm:gap-6">
+        <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
           <button
             onClick={onClose}
             disabled={isLoading}

@@ -180,7 +180,7 @@ export default function SecondContent() {
           {partners.map((item) => {
             if (item.type === "connected") {
               return (
-                <PartnersCardConnected
+                <PartnersInitialConnected
                   key={`c-${item.data.uid}`}
                   partner={item.data}
                 />

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../../../hooks/useAuth";
 import defaultUserIcon from "../../../assets/ui_user.svg";
 import ContactModal from "../../ContactModal";
 
@@ -8,6 +9,8 @@ export default function PartnersCardConnected({ partner = {}, user = {} }) {
 
   // Use partner data if available, otherwise fall back to user data
   const data = partner.id ? partner : user;
+
+  const { userProfile } = useAuth();
 
   const handleMessageClick = () => {
     setShowContactModal(true);
@@ -21,7 +24,7 @@ export default function PartnersCardConnected({ partner = {}, user = {} }) {
           <div className="w-12 h-12 rounded-full overflow-hidden border bg-gray-100 flex items-center justify-center">
             <img
               src={data.profilePicture || data.image || defaultUserIcon}
-              alt={data.name || "User"}
+              alt={data.fullName || "User"}
               className="w-full h-full object-cover"
             />
           </div>
@@ -33,7 +36,7 @@ export default function PartnersCardConnected({ partner = {}, user = {} }) {
             >
               {data.name}
             </Link>
-            <p className="text-xs text-gray-500">Already connected partner</p>
+            <p className="text-base text-gray-900">{data?.fullName}</p>
           </div>
         </div>
 

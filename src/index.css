@@ -130,3 +130,17 @@ select:focus-visible {
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+
+@keyframes slowbounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-slowbounce {
+  animation: slowbounce 5s ease-in-out infinite;
+}
