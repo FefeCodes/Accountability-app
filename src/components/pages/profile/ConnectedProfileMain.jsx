@@ -7,7 +7,7 @@ export default function ConnectedProfileMain({ partner }) {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[calc(100vh-5rem)] flex flex-col">
       <div className="fixed top-20 md:top-26 left-0 right-0 z-10 px-4 pt-3 md:px-12 md:ml-64 md:w-[calc(100%-16rem)]">
         <button
           onClick={() => navigate("/partners")}
@@ -20,7 +20,7 @@ export default function ConnectedProfileMain({ partner }) {
         </button>
       </div>
 
-      <div className="pt-20 px-2 md:px-10 md:ml-64 space-y-4">
+      <div className="flex-1 mt-28 md:mt-32 px-2 md:px-10 md:ml-2 space-y-4 overflow-y-auto pb-8">
         <ConnectedFirstContent partner={partner} />
         <ConnectedSecondContent partner={partner} />
       </div>

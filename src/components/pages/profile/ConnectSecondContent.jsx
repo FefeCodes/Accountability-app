@@ -12,12 +12,12 @@ export default function ConnectSecondContent({ partner }) {
   return (
     <div className="w-full h-auto p-4 sm:p-6 lg:p-8 flex flex-col gap-y-6 rounded-xl shadow-md bg-white">
       <div className="flex flex-col gap-y-6">
-        <div className="flex flex-row justify-start gap-x-20">
+        <div className="flex sm:flex-row flex-col justify-start gap-x-20">
           <div className="flex flex-col gap-y-1">
             <h4 className="font-semibold text-lg sm:text-xl text-gray-900">
               Recent Activity
             </h4>
-            <div className="flex flex-row justify-center items-center gap-x-1">
+            <div className="flex flex-row sm:justify-center justify-start items-center gap-x-1 mb-4">
               <p className="font-medium text-base sm:text-lg text-gray-900">
                 Last login:
               </p>
@@ -58,7 +58,7 @@ export default function ConnectSecondContent({ partner }) {
                   key={index}
                   className="text-gray-600 text-base font-medium leading-relaxed"
                 >
-                  {goal}
+                  {goal.title}
                 </p>
               ))}
             </div>
@@ -66,7 +66,7 @@ export default function ConnectSecondContent({ partner }) {
         )}
 
         {/* Bio */}
-        {partner.bio && (
+        {/* {partner.bio && (
           <div className="flex flex-col gap-y-1">
             <h4 className="font-semibold text-lg sm:text-xl text-gray-900">
               About
@@ -77,7 +77,7 @@ export default function ConnectSecondContent({ partner }) {
               </p>
             </div>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Partner Rating */}

@@ -22,7 +22,7 @@ export default function ConnectProfileMain({ partner }) {
       </div>
 
       {/* ✅ Page Content: spaced from fixed header and scrollable only within content */}
-      <div className="flex-1 mt-28 md:mt-32 px-2 md:px-10 md:ml-64 space-y-4 overflow-y-auto pb-8">
+      <div className="flex-1 mt-28 md:mt-32 px-2 md:px-10 md:ml-2 space-y-4 overflow-y-auto pb-8">
         <ConnectFirstContent partner={partner} />
         <ConnectSecondContent partner={partner} />
       </div>

@@ -92,7 +92,7 @@ export default function PartnersCard({ partner = {}, user = {} }) {
             {data.fullName || data.name || "John Doe"}
           </Link>
           <p className="text-base text-gray-500">
-            {data.goals?.[0] ||
+            {data.goals?.[0].title ||
               data.goal ||
               "Learn React and work on a project"}
           </p>

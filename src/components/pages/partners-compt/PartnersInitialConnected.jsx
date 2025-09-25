@@ -115,7 +115,7 @@ export default function PartnersInitialConnected({
           </Link>
 
           <p className="text-base text-gray-500">
-            {displayData.goals?.[0] || displayData.goal}
+            {displayData.goals?.[0].title || displayData.goal}
           </p>
         </div>
       </div>
