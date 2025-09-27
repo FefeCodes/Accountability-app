@@ -106,19 +106,19 @@ export default function ConnectionRequests() {
   }
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+    <div className="space-y-3">
+      <h3 className="text-lg font-medium text-gray-800 mb-4">
         Connection Requests ({requests.length})
       </h3>
 
       {requests.map((request) => (
         <div
           key={request.id}
-          className="bg-white rounded-lg shadow-sm border p-4"
+          className="bg-white rounded-lg shadow-xs border border-gray-200 p-4"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-200">
+              <div className="w-12 h-12 rounded-full overflow-hidden border-1 border-gray-100">
                 <img
                   src={
                     request.userData?.profilePicture || "/default-avatar.png"
@@ -145,15 +145,50 @@ export default function ConnectionRequests() {
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-x-4">
+              {/* Accept Button */}
               <button
                 onClick={() => handleAcceptRequest(request.id)}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm"
+                className="px-2 py-2 border sm:border-none sm:bg-blue-600 border-blue-600 text-white rounded-full sm:rounded-lg hover:bg-blue-700 transition text-sm flex items-center justify-center"
               >
-                Accept
+                {/* Text on larger screens */}
+                <span className="hidden sm:block">Accept</span>
+                {/* Icon on mobile */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 stroke-blue-600 hover:stroke-white sm:hidden"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
               </button>
-              <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition text-sm">
-                Decline
+
+              {/* Decline Button */}
+              <button className="px-2 py-2 border border-gray-500 sm:border-none sm:bg-gray-200 text-gray-700 rounded-full sm:rounded-lg hover:bg-gray-700 hover:text-white  transition text-sm flex items-center justify-center">
+                {/* Text on larger screens */}
+                <span className="hidden sm:block">Decline</span>
+                {/* Icon on mobile */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 stroke-gray-500 hover:stroke-white sm:hidden"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </button>
             </div>
           </div>

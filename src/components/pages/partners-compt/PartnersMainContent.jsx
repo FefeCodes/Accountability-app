@@ -79,9 +79,10 @@ export default function PartnersMainContent() {
   const connectedUsers = allUsers.filter(
     (user) => getUserConnectionStatus(user.uid) === "connected"
   );
-  const availableUsers = allUsers.filter(
-    (user) => getUserConnectionStatus(user.uid) === "available"
-  );
+  const availableUsers = allUsers.filter((user) => {
+    const status = getUserConnectionStatus(user.uid);
+    return status === "available" || status === "received";
+  });
   const pendingUsers = allUsers.filter(
     (user) => getUserConnectionStatus(user.uid) === "pending"
   );
@@ -153,7 +154,7 @@ export default function PartnersMainContent() {
       <div className="mt-4 px-2 sm:px-5 py-2 bg-white shadow-sm rounded-b-xl flex-1 flex flex-col overflow-hidden">
         {loading ? (
           <div className="px-3 sm:px-5 py-6 overflow-y-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {[...Array(8)].map((_, i) => (
                 <div key={i} className="animate-pulse">
                   <div className="h-48 bg-gray-200 rounded-lg"></div>
@@ -204,44 +205,30 @@ export default function PartnersMainContent() {
               ${
                 activeTab === "Connected"
                   ? "flex flex-col w-full gap-4 sm:gap-6"
-                  : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
+                  : "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
               }`}
           >
             {activeTab === "All" && (
               <>
-                {(() => {
-                  const mixedUsers = [
-                    ...filteredAvailableUsers.map((user) => ({
-                      type: "partner",
-                      data: { ...user, connectionStatus: "available" },
-                    })),
-                    ...filteredConnectedUsers.map((user) => ({
-                      type: "init",
-                      data: { ...user, connectionStatus: "connected" },
-                    })),
-                    ...filteredPendingUsers.map((user) => ({
-                      type: "partner",
-                      data: { ...user, connectionStatus: "pending" },
-                    })),
-                  ];
+                {filterUsersBySearch(allUsers).map((user) => {
+                  const status = getUserConnectionStatus(user.uid);
 
-                  // Shuffle
-                  mixedUsers.sort(() => Math.random() - 0.5);
-
-                  return mixedUsers.map((item) =>
-                    item.type === "partner" ? (
-                      <PartnersCard
-                        key={`p-${item.data.uid}`}
-                        partner={item.data}
-                      />
-                    ) : (
+                  if (status === "connected") {
+                    return (
                       <PartnersInitialConnected
-                        key={`i-${item.data.uid}`}
-                        partner={item.data}
+                        key={user.uid}
+                        partner={{ ...user, connectionStatus: "connected" }}
                       />
-                    )
+                    );
+                  }
+
+                  return (
+                    <PartnersCard
+                      key={user.uid}
+                      partner={{ ...user, connectionStatus: status }}
+                    />
                   );
-                })()}
+                })}
               </>
             )}
 
