@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import ProgressBar from "../atoms/ProgressBar.jsx";
 import Select from "../forms/Select.jsx";
-import logo from "../../assets/logo.svg"
+import logo from "../../assets/logo.svg";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { updateOnboardingProgress } from "../../config/firebase";
@@ -79,13 +79,15 @@ export default function OnboardingFourth() {
         </Link>
       </div>
       {/* Desktop: top-left logo */}
-      <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
+      <div className="hidden lg:flex lg:fixed lg:top-25 lg:left-6 z-50">
         <Link to="/">
           <img src={logo} alt="App Logo" className="h-10 w-10" />
         </Link>
       </div>
 
-      <h2 className="font-bold text-2xl lg:text-3xl text-gray-900">Availability & Preferences</h2>
+      <h2 className="font-bold text-2xl lg:text-3xl text-gray-900">
+        Availability & Preferences
+      </h2>
 
       <div className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-7 lg:gap-y-8">
         <div className="w-full h-auto flex flex-col gap-y-4">

@@ -85,36 +85,27 @@ export const saveUserToFirestore = async (user, method, fullName = null) => {
 };
 
 export const signInWithGoogle = async () => {
-  const result = await handleFirebaseOperation(async () => {
+  try {
     provider.setCustomParameters({
       prompt: "select_account",
     });
 
     const result = await signInWithPopup(auth, provider);
-    let userData;
 
+    let userData;
     try {
       userData = await getUserFromFirestoreSilent(result.user.uid);
     } catch {
-      // User doesn't exist, create new user
-      try {
-        await saveUserToFirestore(result.user, "google");
-        userData = await getUserFromFirestoreSilent(result.user.uid);
-      } catch (saveError) {
-        console.error("Failed to save user data:", saveError);
-        throw new Error("Failed to create your account. Please try again.");
-      }
+      await saveUserToFirestore(result.user, "google");
+      userData = await getUserFromFirestoreSilent(result.user.uid);
     }
 
     showSuccessToast("Successfully signed in with Google!");
     return userData;
-  }, "Failed to sign in with Google");
-
-  if (!result.success) {
-    throw result.error;
+  } catch (error) {
+    console.error("Failed Google sign in:", error);
+    throw error;
   }
-
-  return result.data;
 };
 
 export const signInWithEmail = async (email, password) => {

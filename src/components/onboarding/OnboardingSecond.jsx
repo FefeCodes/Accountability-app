@@ -120,7 +120,7 @@ export default function OnboardingSecond() {
         </Link>
       </div>
       {/* Desktop: top-left logo */}
-      <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
+      <div className="hidden lg:flex lg:fixed lg:top-25 lg:left-6 z-50">
         <Link to="/">
           <img src={logo} alt="App Logo" className="h-10 w-10" />
         </Link>

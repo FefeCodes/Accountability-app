@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import ProgressBar from "../atoms/ProgressBar.jsx";
-import logo from "../../assets/logo.svg"
+import logo from "../../assets/logo.svg";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth.js";
 import { updateOnboardingProgress } from "../../config/firebase";
@@ -13,9 +13,13 @@ export default function OnboardingThird() {
   const navigate = useNavigate();
   const { currentUser, userProfile, setUserProfile } = useAuth();
 
-  const [selectedStyles, setSelectedStyles] = useState(userProfile?.styles || []);
+  const [selectedStyles, setSelectedStyles] = useState(
+    userProfile?.styles || []
+  );
   const [oneOnOne, setOneOnOne] = useState(userProfile?.oneOnOne || false);
-  const [smallGroups, setSmallGroups] = useState(userProfile?.smallGroups || false);
+  const [smallGroups, setSmallGroups] = useState(
+    userProfile?.smallGroups || false
+  );
   const [loading, setLoading] = useState(false);
 
   const styles = [
@@ -42,7 +46,11 @@ export default function OnboardingThird() {
   };
 
   return (
-    <main className="w-full min-h-screen flex flex-col justify-start items-center gap-y-6 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100" role="main" aria-labelledby="onboarding-style-heading">
+    <main
+      className="w-full min-h-screen flex flex-col justify-start items-center gap-y-6 lg:gap-y-10 bg-gradient-to-br from-blue-50 to-indigo-100"
+      role="main"
+      aria-labelledby="onboarding-style-heading"
+    >
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
 
       {/* Mobile: centered logo */}
@@ -52,17 +60,23 @@ export default function OnboardingThird() {
         </Link>
       </div>
       {/* Desktop: top-left logo */}
-      <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
+      <div className="hidden lg:flex lg:fixed lg:top-25 lg:left-6 z-50">
         <Link to="/">
           <img src={logo} alt="App Logo" className="h-10 w-10" />
         </Link>
       </div>
 
-      <h2 id="onboarding-style-heading" className="font-bold text-2xl lg:text-3xl text-gray-900">
+      <h2
+        id="onboarding-style-heading"
+        className="font-bold text-2xl lg:text-3xl text-gray-900"
+      >
         Your Style
       </h2>
 
-      <section className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-7 lg:gap-y-8" aria-labelledby="style-question">
+      <section
+        className="w-9/10 sm:w-full max-w-2xl p-5 py-8 sm:p-6 lg:p-12 bg-white rounded-2xl shadow-xl flex flex-col justify-start items-start gap-y-7 lg:gap-y-8"
+        aria-labelledby="style-question"
+      >
         <h2 id="style-question" className="text-xl font-semibold">
           What styles keep you accountable?
         </h2>
@@ -87,7 +101,9 @@ export default function OnboardingThird() {
         {/* Toggle Sliders (right-aligned) */}
         <div className="w-full flex flex-col items-end justify-end gap-6 mt-4">
           <label className="flex items-center gap-2 cursor-pointer">
-            <span className="text-gray-800 font-light text-sm">Prefer one-on-one partner</span>
+            <span className="text-gray-800 font-light text-sm">
+              Prefer one-on-one partner
+            </span>
             <div className="relative">
               <input
                 type="checkbox"
@@ -95,13 +111,23 @@ export default function OnboardingThird() {
                 onChange={() => setOneOnOne(!oneOnOne)}
                 className="sr-only"
               />
-              <div className={`block w-10 h-5 rounded-full transition ${oneOnOne ? "bg-blue-600" : "bg-gray-300"}`}></div>
-              <div className={`dot absolute left-0.5 top-0.5 w-4 h-4 rounded-full bg-white transition ${oneOnOne ? "translate-x-5" : ""}`}></div>
+              <div
+                className={`block w-10 h-5 rounded-full transition ${
+                  oneOnOne ? "bg-blue-600" : "bg-gray-300"
+                }`}
+              ></div>
+              <div
+                className={`dot absolute left-0.5 top-0.5 w-4 h-4 rounded-full bg-white transition ${
+                  oneOnOne ? "translate-x-5" : ""
+                }`}
+              ></div>
             </div>
           </label>
 
           <label className="flex items-center gap-2 cursor-pointer">
-            <span className="text-gray-800 font-light text-sm">Open to small groups</span>
+            <span className="text-gray-800 font-light text-sm">
+              Open to small groups
+            </span>
             <div className="relative">
               <input
                 type="checkbox"
@@ -109,8 +135,16 @@ export default function OnboardingThird() {
                 onChange={() => setSmallGroups(!smallGroups)}
                 className="sr-only"
               />
-              <div className={`block w-10 h-5 rounded-full transition ${smallGroups ? "bg-blue-600" : "bg-gray-300"}`}></div>
-              <div className={`dot absolute left-0.5 top-0.5 w-4 h-4 rounded-full bg-white transition ${smallGroups ? "translate-x-5" : ""}`}></div>
+              <div
+                className={`block w-10 h-5 rounded-full transition ${
+                  smallGroups ? "bg-blue-600" : "bg-gray-300"
+                }`}
+              ></div>
+              <div
+                className={`dot absolute left-0.5 top-0.5 w-4 h-4 rounded-full bg-white transition ${
+                  smallGroups ? "translate-x-5" : ""
+                }`}
+              ></div>
             </div>
           </label>
         </div>

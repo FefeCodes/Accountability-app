@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import ProgressBar from "../atoms/ProgressBar.jsx";
 import confettiBall from "../../assets/confetti-ball.svg";
-import logo from "../../assets/logo.svg"
+import logo from "../../assets/logo.svg";
 import { toast } from "react-toastify";
 
 export default function OnboardingFinal() {
@@ -26,7 +26,7 @@ export default function OnboardingFinal() {
         </Link>
       </div>
       {/* Desktop: top-left logo */}
-      <div className="hidden lg:flex lg:fixed lg:top-4 lg:left-6 z-50">
+      <div className="hidden lg:flex lg:fixed lg:top-25 lg:left-6 z-50">
         <Link to="/">
           <img src={logo} alt="App Logo" className="h-10 w-10" />
         </Link>
@@ -51,18 +51,18 @@ export default function OnboardingFinal() {
           >
             Go to Dashboard
             <svg
-                className="ml-2 w-8 h-8"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
+              className="ml-2 w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
           </button>
         </div>
       </div>
