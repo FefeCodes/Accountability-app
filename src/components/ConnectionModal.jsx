@@ -26,9 +26,9 @@ export default function ConnectionModal({
       );
       if (success) {
         toast.success("Request sent! 🎉");
+        navigate("/dashboard");
         onSuccess?.();
         onClose?.();
-        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Error sending connection request:", error);
