@@ -439,10 +439,21 @@ export const sendUserConnectionRequest = async (fromUserId, toUserId) => {
       throw new Error("Connection request already exists");
     }
 
-    // Create connection request in partners collection
+    // ✅ Fetch partner's user data so we can store their name
+    const toUserRef = doc(db, "users", toUserId);
+    const toUserDoc = await getDoc(toUserRef);
+
+    if (!toUserDoc.exists()) {
+      throw new Error("Target user not found");
+    }
+
+    const toUserData = toUserDoc.data();
+
+    // Create connection request with partner’s name
     const connectionRequest = {
       fromUserId,
       toUserId,
+      toUserName: toUserData.fullName || toUserData.displayName || "", // ✅ store partner's name
       status: "pending",
       createdAt: new Date().toISOString(),
     };

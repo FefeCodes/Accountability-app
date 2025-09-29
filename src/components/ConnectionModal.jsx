@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { sendUserConnectionRequest } from "../utils/firebaseData";
+import { toast } from "react-toastify";
 
 export default function ConnectionModal({
   isOpen,
@@ -10,12 +12,12 @@ export default function ConnectionModal({
 }) {
   const { currentUser } = useAuth();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   if (!isOpen || !partner) return null;
 
   const handleConnect = async () => {
     if (!currentUser) return;
-
     setLoading(true);
     try {
       const success = await sendUserConnectionRequest(
@@ -23,11 +25,14 @@ export default function ConnectionModal({
         partner.uid
       );
       if (success) {
+        toast.success("Request sent! 🎉");
         onSuccess?.();
-        onClose();
+        onClose?.();
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Error sending connection request:", error);
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -59,12 +64,13 @@ export default function ConnectionModal({
           </div>
 
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-            Connect with {partner.name}?
+            Connect with {partner.fullName || partner.name}?
           </h2>
 
           <p className="text-gray-600 mb-6">
-            Send a connection request to {partner.name}. They'll be able to see
-            your profile and you can start working together on your goals.
+            Send a connection request to {partner.fullName || partner.name}.
+            They'll be able to see your profile and you can start working
+            together on your goals.
           </p>
 
           <div className="flex gap-3 justify-center">
